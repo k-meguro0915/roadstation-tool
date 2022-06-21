@@ -13,9 +13,9 @@
       <li id="route" class="nav-item">
         <a class="nav-link" href="/facilities">付帯施設一覧 <span class="sr-only">(current)</span></a>
       </li>
-      <li id="create_roadstation" class="nav-item">
+      <!-- <li id="create_roadstation" class="nav-item">
         <a class="nav-link" href="/create_roadstation">道の駅新規登録</a>
-      </li>
+      </li> -->
       <li id="import_csv" class="nav-item">
         <a class="nav-link" href="/import_csv">CSV取り込み</a>
       </li>
