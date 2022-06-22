@@ -267,8 +267,7 @@ class RoadstationService
       $arr['TouristFacility'] = implode('、',$arr_sight);
       $ret[] = $arr;
     }
-    dd($ret);
-    // $cid = $ret['roadstation'][0]->CID;
+    return $ret;
   }
   private function initApiArray(){
     $ret = [
