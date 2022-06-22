@@ -16,6 +16,8 @@ use App\Models\AncillaryEquipments;
 use App\Models\IncidentalFacility;
 use App\Models\SeasonalInformation;
 use App\Models\SeasonalInformationFlag;
+use App\Models\MstEquipments;
+use App\Models\MstFacility;
 use Illuminate\Http\Request;
 
 class RoadstationService
@@ -173,6 +175,141 @@ class RoadstationService
       $model->create( $data );
     }
     return true;
+  }
+  public function apiGet(){
+    $ret = [];
+    $roadstation = Roadstation::orderBy('ZPX_ID','asc')->get();
+    foreach($roadstation as $key => $item){
+      $arr = $this->initApiArray();
+      $value = $item->getAttributes();
+      $arr["ID"] = $value['ZPX_ID'];
+      $arr["RoadStationName"] = $value['name'];
+      $arr["RoadStationNumber"] = substr($value['ZPX_ID'],strpos($value['ZPX_ID'],'-')+1);
+      $arr["RoadStationNameKana"] = $value['name_furi'];
+      $arr["RoadStationGuide"] = $value['introduction'];
+      $arr["CatchCopy"] = $value['catch_copy'];
+      $arr["PhotoUrl"] = $value['thumbnail'];
+      $arr["RegistryYear"] = $value['registry_year'];
+      $prefecture_id = substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-'));
+      $arr["PrefectureCD"] = $prefecture_id;
+      $arr["PrefectureID"] = $prefecture_id;
+      $address = RoadstationAddress::where('CID',$value['CID'])->get();
+      $address = $address[0];
+      $arr["Area"] = $address['prefecture'];
+      $arr["Latitude"] = $address['latitude_x'];
+      $arr["Longitude"] = $address['latitude_y'];
+      $arr["MapCode"] = $address['map_code'];
+      $arr["PrefectureNameCD"] = $address['prefecture'];
+      $arr["PhoneNumber"] = $address['tel'];
+      $arr["Elebation"] = $address['elebation'];
+      $arr['RoadStationAddress'] = $address['prefecture'] . $address['local_address'];
+      $urls = RoadstationUrls::where('CID',$value['CID'])->get();
+      $urls = $urls[0];
+      $arr["Twitter"] = $urls['twitter'];
+      $arr["Facebook"] = $urls['facebook'];
+      $arr["Instagram"] = $urls['instagram'];
+      $arr["HomePage"] = $urls['web'];
+      $parking = RoadstationUrls::where('CID',$value['CID'])->get();
+      $parking = $parking[0];
+      $arr["LargeParkingLot"] = $urls['learge_parking_number'];
+      $arr["ParkingLotHandicap"] = $urls['disabilities_parking_number'];
+      $arr["ParkingLotNormalNumber"] = $urls['middle_parking_number'];
+      $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
+      if(!empty($business_hour[0])){
+        $business_hour = $business_hour[0];
+        $arr["BusinessHours"] = $business_hour['start_time'] . '～' . $business_hour['end_time'];
+        $arr["BusinessHoursInformation"] = $business_hour['time_sightseeing_code'];
+        $arr["Holiday"] = $business_hour['regular_holiday'];
+      }
+      $stamp = RoadstationBusinessStampInformation::where('CID',$value['CID'])->get();
+      if(!empty($stamp[0])){
+        $stamp = $stamp[0]->getAttributes();
+        $arr['StampContent'] = $stamp['installation_location'];
+      }
+      $local_road = LocationRoad::where('CID',$value['CID'])->get();
+      $cnt_highway = 1;
+      $cnt_majorway = 1;
+      foreach($local_road as $key => $item){
+        if($item['location_road_type'] == '1'){
+          $arr["NationalHighWay".$cnt_highway] = $item['road_number'];
+          $cnt_highway++;
+        } else if($item['location_road_type'] == '2'){
+          $arr["MajorPrefecturalRoad".$cnt_majorway] = $item['road_number'];
+          $cnt_majorway++;
+        }
+      }
+      $equipment = AncillaryEquipments::where('CID',$value['CID'])->get();
+      $arr_equipment = [];
+      foreach($equipment as $key => $item){
+        $arr['RegularParkingLotWithOrWithoutWirelessLAN'] = $item['equipment_id'] == '3' ? 'true' : 'false';
+        $arr['Laundry'] = $item['equipment_id'] == '2' ? 'true' : 'false';
+        $arr_equipment[] = MstEquipments::where('id',$item['equipment_id'])->get('name')[0]->getAttributes()['name'];
+      }
+      $mst_facility = MstFacility::all();
+      $facility = FacilityDetail::where('ZPX_ID',$item['ZPX_ID'])->get();
+      $arr_facility = [];
+      if(0 < $facility->count()){
+        foreach($facility as $key => $item){
+          $item = $item->getAttributes();
+          $arr_facility[] = MstFacility::where('id',$tmp['facility_code'])->get('name')[0]->getAttributes()['name'];
+          // dd($arr_facility);
+        }
+      }
+      $arr['Facility'] = [
+        '施設種別' => implode('、',$arr_facility),
+        'サービス種別' => implode('、',$arr_equipment)
+      ];
+      $sightseeing = RoadstationSightseeing::where('CID',$value['CID'])->get();
+      $arr_sight = [];
+      foreach($sightseeing as $key => $item){
+        $arr_sight[] = $item['name'];
+      }
+      $arr['TouristFacility'] = implode('、',$arr_sight);
+      $ret[] = $arr;
+    }
+    dd($ret);
+    // $cid = $ret['roadstation'][0]->CID;
+  }
+  private function initApiArray(){
+    $ret = [
+      'Area' => 'N/A',
+      'ID' => 'N/A',
+      'Latitude' => 'N/A',
+      'Longitude' => 'N/A',
+      'MapCode' => 'N/A',
+      'PrefectureNameCD' => 'N/A',
+      'PrefectureCD' => 'N/A',
+      'PrefectureID' => 'N/A',
+      'RoadStationAddress' => 'N/A',
+      'RoadStationName' => 'N/A',
+      'RoadStationNumber' => 'N/A',
+      'RoadStationGuide' => 'N/A',
+      'Twitter' => 'N/A',
+      'Facebook' => 'N/A',
+      'Instagram' => 'N/A',
+      'HomePage' => 'N/A',
+      'BusinessHours' => 'N/A',
+      'LargeParkingLot' => 'N/A',
+      'ParkingLotHandicap' => 'N/A',
+      'ParkingLotNormalNumber' => 'N/A',
+      'RegularParkingLotWithOrWithoutWirelessLAN' => 'N/A',
+      'TouristFacility' => 'N/A',
+      'CatchCopy' => 'N/A',
+      'Laundry' => 'N/A',
+      'PhoneNumber' => 'N/A',
+      'PhotoUrl' => 'N/A',
+      'BusinessHoursInformation' => 'N/A',
+      'Holiday' => 'N/A',
+      'RoadStationNameKana' => 'N/A',
+      'StampContent' => 'N/A',
+      'NationalHighWay1' => 'N/A',
+      'NationalHighWay2' => 'N/A',
+      'MajorPrefecturalRoad1' => 'N/A',
+      'MajorPrefecturalRoad2' => 'N/A',
+      'RegistryYear' => 'N/A',
+      'Facilities' => 'N/A',
+    ];
+    return $ret;
   }
   public function delete($cid){
     Roadstation::where('CID',$cid)->delete();

@@ -13,7 +13,7 @@ class APIController extends Controller
     public function getRoadstations(){
       try{
         $service = new RoadstationService;
-        $ret = $service->all();
+        $ret = $service->apiGet();
         $result = [
           'result' => $ret
         ];
