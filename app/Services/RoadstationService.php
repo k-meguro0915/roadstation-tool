@@ -184,13 +184,13 @@ class RoadstationService
       $value = $item->getAttributes();
       $arr["ID"] = $value['ZPX_ID'];
       $arr["RoadStationName"] = $value['name'];
-      $arr["RoadStationNumber"] = substr($value['ZPX_ID'],strpos($value['ZPX_ID'],'-')+1);
+      $arr["RoadStationNumber"] = intval(substr($value['ZPX_ID'],strpos($value['ZPX_ID'],'-')+1));
       $arr["RoadStationNameKana"] = $value['name_furi'];
       $arr["RoadStationGuide"] = $value['introduction'];
       $arr["CatchCopy"] = $value['catch_copy'];
       $arr["PhotoUrl"] = $value['thumbnail'];
       $arr["RegistryYear"] = $value['registry_year'];
-      $prefecture_id = substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-'));
+      $prefecture_id = intval(substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-')));
       $arr["PrefectureCD"] = $prefecture_id;
       $arr["PrefectureID"] = $prefecture_id;
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
@@ -241,8 +241,8 @@ class RoadstationService
       $equipment = AncillaryEquipments::where('CID',$value['CID'])->get();
       $arr_equipment = [];
       foreach($equipment as $key => $item){
-        $arr['RegularParkingLotWithOrWithoutWirelessLAN'] = $item['equipment_id'] == '3' ? 'true' : 'false';
-        $arr['Laundry'] = $item['equipment_id'] == '2' ? 'true' : 'false';
+        $arr['RegularParkingLotWithOrWithoutWirelessLAN'] = $item['equipment_id'] == '3' ? true : false;
+        $arr['Laundry'] = $item['equipment_id'] == '2' ? true : false;
         $arr_equipment[] = MstEquipments::where('id',$item['equipment_id'])->get('name')[0]->getAttributes()['name'];
       }
       $mst_facility = MstFacility::all();
