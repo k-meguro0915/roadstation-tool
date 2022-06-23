@@ -9,6 +9,7 @@ use Goodby\CSV\Import\Standard\Lexer;
 use Goodby\CSV\Import\Standard\Interpreter;
 use Illuminate\Support\Facades\Log;
 use App\Services\ImportCsvService;
+use App\Services\DataVersionService;
 class CsvController extends Controller
 {
   public function index(){
@@ -36,6 +37,8 @@ class CsvController extends Controller
       if(count($fileHeader) != 49) return false;
       $service->bulkInsertFacility($users);
     }
+    $version = new DataVersionService();
+    $version->update();
     Storage::delete($upload_file_name);
     return redirect('/');
   }

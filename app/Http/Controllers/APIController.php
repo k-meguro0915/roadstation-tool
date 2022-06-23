@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 // サービス呼び出し
 use App\Services\FacilityService;
 use App\Services\RoadstationService;
+use App\Services\DataVersionService;
 class APIController extends Controller
 {
     //
@@ -68,6 +69,24 @@ class APIController extends Controller
       try{
         $service = new RoadstationService;
         $ret = $service->detail($uid);
+        $result = [
+          'result' => $ret
+        ];
+      } catch(\Exception $e){
+        $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$e->getMessage()]
+            ],
+        ];
+        return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
+    }
+    public function getDatabaseVersion(){
+      try{
+        $service = new DataVersionService;
+        $ret = $service->get();
         $result = [
           'result' => $ret
         ];
