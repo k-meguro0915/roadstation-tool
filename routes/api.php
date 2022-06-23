@@ -19,6 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('get_roadstations',[APIController::class,'getRoadstations']);
-Route::get('get_roadstation_detail',[APIController::class,'getRoadstationDetail']);
+Route::get('get_roadstation_detail/{ZPX_ID}',[APIController::class,'getRoadstationDetail']);
 Route::get('get_facilities',[APIController::class,'getFacilities']);
 Route::get('get_facility_detail',[APIController::class,'getFacilityDetail']);

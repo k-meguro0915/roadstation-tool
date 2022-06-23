@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // サービス呼び出し
 use App\Services\FacilityService;
+// モデル連携
+use App\Models\MstFacility;
+use App\Models\MstEquipments;
 
 class ListFacilityController extends Controller
 {

@@ -13,7 +13,7 @@ class APIController extends Controller
     public function getRoadstations(){
       try{
         $service = new RoadstationService;
-        $ret = $service->apiGet();
+        $ret = $service->apiAll();
         $result = [
           'result' => $ret
         ];
@@ -28,10 +28,10 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
-    public function getRoadstationDetail(Request $zpx_id){
+    public function getRoadstationDetail($zpx_id){
       try{
         $service = new RoadstationService;
-        $ret = $service->detail($zpx_id);
+        $ret = $service->apidetail($zpx_id);
         $result = [
           'result' => $ret
         ];

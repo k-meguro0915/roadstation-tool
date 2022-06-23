@@ -68,7 +68,8 @@ class RoadStationController extends Controller
     return redirect('/');
   }
   public function show($zpx_id){
-    $equipments = MstFacility::orderBy('id','asc')->get();
+    $equipments = MstEquipments::orderBy('id','asc')->get();
+    // dd($equipments->where('id','01')[0]['name']);
     // $facilities = MstEquipments::orderBy('id','asc')->get();
     $roadstation = $this->service->show($zpx_id);
     // dd($equipments[0]);
