@@ -19,10 +19,20 @@ class ListRoadStationController extends Controller
 
     public function index(){
         $road_station = $this->service->get();
+        $count = $this->service->count();
         // dd($road_station[0]->getAttributes());
         return view('welcome',[
             'road_station' => $road_station,
+            'count' => $count
         ]);
+    }
+    public function showDeleted(){
+      $road_station = $this->service->deletedList();
+      // $count = $this->service->count();
+      // dd($road_station[0]->getAttributes());
+      return view('listRoadstationDelete',[
+          'road_station' => $road_station,
+      ]);
     }
 
 }

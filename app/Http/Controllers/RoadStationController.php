@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Models\MstFacility;
 use App\Models\MstEquipments;
+use App\Services\DataVersionService;
 
 // サービス定義
 use App\Services\RoadstationService;
@@ -62,10 +63,19 @@ class RoadStationController extends Controller
     return redirect('/');
   }
   // 道の駅削除
-  public function delete($cid){
-    Log::Debug($cid);
-    $this->service->delete($cid);
+  public function delete($zpx_id){
+    Log::Debug($zpx_id);
+    $this->service->changeDeleteFlg($zpx_id,1);
+    $version = new DataVersionService();
+    $version->update();
     return redirect('/');
+  }
+  public function restore($zpx_id){
+    Log::Debug($zpx_id);
+    $this->service->changeDeleteFlg($zpx_id,0);
+    $version = new DataVersionService();
+    $version->update();
+    return redirect('/show_deleted_roadstation');
   }
   public function show($zpx_id){
     $equipments = MstEquipments::orderBy('id','asc')->get();

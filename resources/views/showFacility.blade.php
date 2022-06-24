@@ -4,7 +4,6 @@
 
 @section('content')
 	<div class="my-5">
-		<h2>付帯施設詳細</h2>
       <div>
         <span>{{ $facility['name_furi'] }}</span>
         <h3>{{ $facility['name'] }}</h3>

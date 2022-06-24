@@ -4,10 +4,9 @@
 
 @section('content')
 	<div class="my-5">
-    <h2 class="mb-5">付帯施設一覧</h2>
+    <h2 class="mb-5">削除した付帯施設一覧</h2>
     <div class="mb-5">
-      <p class="d-inline">総数{{$count}}件</p>
-      <a class="d-inline float-right" href="/show_deleted_facilities"><button class="btn btn-primary">削除された付帯施設</button></a>
+      <a class="d-inline float-right" href="/facilities"><button class="btn btn-primary">付帯施設一覧</button></a>
     </div>
 		<table class="table">
 			<thead>
@@ -16,7 +15,6 @@
 					<th scope="col">UID</th>
 					<th scope="col">カテゴリID</th>
 					<th scope="col">施設名称</th>
-					<th scope="col">編集/削除</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,11 +26,7 @@
 					<td>{{ $item['ZPX_ID'] }}</td>
 					<td>{{ $item['UID'] }}</td>
 					<td>{{ $item['category_code'] }}</td>
-					<td><a href="/facilities/show/{{$item['UID']}}">{{ $item['name'] }}</a></td>
-					<td>
-						<a href="/edit_facility/{{$item['UID']}}" class="btn btn-primary disabled">編集</a>
-						<a href="/delete_facility/{{$item['UID']}}" class="btn btn-danger">削除</a>
-					</td>
+					<td>{{ $item['name'] }}</td>
 				</tr>
 				@endforeach
 			</tbody>

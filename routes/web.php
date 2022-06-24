@@ -26,6 +26,9 @@ Route::get('/edit_roadstation/{CID}',[RoadStationController::class,'edit']);
 Route::put('/edit_roadstation/update',[RoadStationController::class,'update']);
 Route::get('/delete_roadstation/{CID}',[RoadStationController::class,'delete']);
 Route::get('/show_roadstation/{CID}',[RoadStationController::class,'show']);
+Route::get('/show_deleted_roadstation',[ListRoadStationController::class,'showDeleted']);
+Route::get('/show_deleted_facilities',[ListFacilityController::class,'showDeleted']);
+Route::get('/restore_roadstation/{ZPX_ID}',[RoadStationController::class,'restore']);
 
 Route::get('/import_csv', [CsvController::class,'index']);
 Route::post('/import_csv/confirm',[CsvController::class,'confirm']);

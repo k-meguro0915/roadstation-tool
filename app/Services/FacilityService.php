@@ -15,18 +15,22 @@ class FacilityService
   // 道の駅を全取得
   public function all(){
     // Userのmodelクラスのインスタンスを生成
-    return FacilityDetail::orderBy('ZPX_ID','asc')->get();
+    return FacilityDetail::where('is_delete','0')->orderBy('ZPX_ID','asc')->get();
   }
   // 道の駅を全取得（ページネーション）
   public function get(){
     // Userのmodelクラスのインスタンスを生成
-    return FacilityDetail::orderBy('ZPX_ID','asc')->paginate(15);
+    return FacilityDetail::where('is_delete','0')->orderBy('ZPX_ID','asc')->paginate(15);
+  }
+  public function deletedList(){
+    return FacilityDetail::where('is_delete',1)->orderBy('ZPX_ID','asc')->paginate(15);
   }
   public function count(){
     // Userのmodelクラスのインスタンスを生成
-    return FacilityDetail::count();
+    return FacilityDetail::where('is_delete','0')->count();
   }
   // 道の駅取得（ID指定）
+  // リストの時点で削除フラグは非表示なので、こちらではフラグ検索はしない
   public function where($cid){
     return FacilityDetail::where('CID',$cid)->get();
   }
@@ -35,12 +39,12 @@ class FacilityService
   public function show($uid){
     $ret = array();
     // 各情報を持ってくる
-    $ret['facility'] = FacilityDetail::where('UID',$uid)->get();
-    $ret['payment'] = FacilityPayment::where('UID',$uid)->get();
-    $ret['bathing'] = BathingInformation::where('UID',$uid)->get();
-    // $ret['event'] = FacilityEvent::where('UID',$uid)->get();
-    $ret['restaurant'] = RestaurantInformation::where('UID',$uid)->get();
-    $ret['businesshours'] = FacilitiesBusinessHours::where('UID',$uid)->get();
+    $ret['facility'] = FacilityDetail::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    $ret['payment'] = FacilityPayment::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    $ret['bathing'] = BathingInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    // $ret['event'] = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    $ret['restaurant'] = RestaurantInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    $ret['businesshours'] = FacilitiesBusinessHours::where([['UID','=',$uid],['is_delete','=','0']])->get();
     return $ret;
   }
   // 道の駅登録

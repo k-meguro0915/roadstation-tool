@@ -11,13 +11,18 @@ use App\Models\RoadstationParking;
 use App\Models\RoadstationSightseeing;
 use App\Models\RoadstationUrls;
 use App\Models\LocationRoad;
-use App\Models\FacilityDetail;
-use App\Models\AncillaryEquipments;
 use App\Models\IncidentalFacility;
 use App\Models\SeasonalInformation;
 use App\Models\SeasonalInformationFlag;
 use App\Models\MstEquipments;
 use App\Models\MstFacility;
+use App\Models\FacilityDetail;
+use App\Models\FacilityPayment;
+use App\Models\BathingInformation;
+use App\Models\FacilityEvent;
+use App\Models\RestaurantInformation;
+use App\Models\FacilitiesBusinessHours;
+use App\Models\AncillaryEquipments;
 use Illuminate\Http\Request;
 
 class RoadstationService
@@ -30,7 +35,10 @@ class RoadstationService
   // 道の駅取得（ページネーション付き）
   public function get(){
     // Userのmodelクラスのインスタンスを生成
-    return Roadstation::orderBy('CID','asc')->paginate(15);
+    return Roadstation::where('is_delete',0)->orderBy('CID','asc')->paginate(15);
+  }
+  public function deletedList(){
+    return Roadstation::where('is_delete',1)->orderBy('CID','asc')->paginate(15);
   }
   public function count(){
     // Userのmodelクラスのインスタンスを生成
@@ -402,21 +410,26 @@ class RoadstationService
     ];
     return $ret;
   }
-  public function delete($cid){
-    Roadstation::where('CID',$cid)->delete();
-    RoadstationAddress::where('CID',$cid)->delete();
-    RoadstationBusinessHour::where('CID',$cid)->delete();
-    RoadstationBusinessStampInformation::where('CID',$cid)->delete();
-    RoadstationEval::where('CID',$cid)->delete();
-    RoadstationParking::where('CID',$cid)->delete();
-    RoadstationSightseeing::where('CID',$cid)->delete();
-    RoadstationUrls::where('CID',$cid)->delete();
-    LocationRoad::where('CID',$cid)->delete();
-    FacilityDetail::where('CID',$cid)->delete();
-    AncillaryEquipments::where('CID',$cid)->delete();
-    IncidentalFacility::where('CID',$cid)->delete();
-    SeasonalInformation::where('CID',$cid)->delete();
-    SeasonalInformationFlag::where('CID',$cid)->delete();
+  public function changeDeleteFlg($zpx_id,$flg){
+    $cid = Roadstation::where('ZPX_ID',$zpx_id)->get()[0]['CID'];
+    Roadstation::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationAddress::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationBusinessHour::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationBusinessStampInformation::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationEval::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationParking::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationSightseeing::where('CID',$cid)->update(['is_delete'=>$flg]);
+    RoadstationUrls::where('CID',$cid)->update(['is_delete'=>$flg]);
+    LocationRoad::where('CID',$cid)->update(['is_delete'=>$flg]);
+    AncillaryEquipments::where('CID',$cid)->update(['is_delete'=>$flg]);
+    // IncidentalFacility::where('CID',$cid)->update(['is_delete'=>$flg]);
+    SeasonalInformation::where('CID',$cid)->update(['is_delete'=>$flg]);
+    SeasonalInformationFlag::where('CID',$cid)->update(['is_delete'=>$flg]);
+    FacilityDetail::where('ZPX_ID',$zpx_id)->update(['is_delete'=>$flg]);
+    FacilityPayment::where('ZPX_ID',$zpx_id)->update(['is_delete'=>$flg]);
+    BathingInformation::where('ZPX_ID',$zpx_id)->update(['is_delete'=>$flg]);
+    RestaurantInformation::where('ZPX_ID',$zpx_id)->update(['is_delete'=>$flg]);
+    FacilitiesBusinessHours::where('ZPX_ID',$zpx_id)->update(['is_delete'=>$flg]);
     return true;
   }
 }

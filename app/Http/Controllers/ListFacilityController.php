@@ -37,4 +37,12 @@ class ListFacilityController extends Controller
       // 'businesshours' => $facility['businesshours'][0]->getAttributes(),
     ]);
   }
+  public function showDeleted(){
+    $facilities = $this->service->deletedList();
+    // $count = $this->service->count();
+    // dd($facilities[0]->getAttributes());
+    return view('listFacilitiesDelete',[
+        'facilities' => $facilities,
+    ]);
+  }
 }
