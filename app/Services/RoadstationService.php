@@ -277,20 +277,23 @@ class RoadstationService
     }
     return $ret;
   }
+  //  Area: String = ""
+  // ID: String = ""
+  // Latitude: Double = 0.0
+  // Longitude: Double = 0.0
+  // MapCode: String = ""
+  // PrefectureCD: Long = 0
+  // PrefectureID: Long = 0
+  // RoadStationName: String = ""
+  // BusinessHours: String = ""
   public function apiLight(){
     $ret = [];
     $roadstation = Roadstation::orderBy('ZPX_ID','asc')->get();
     foreach($roadstation as $key => $item){
-      $arr = $this->initApiArray(); //道の駅単位の初期化
+      $arr = []; //道の駅単位の初期化
       $value = $item->getAttributes();
       $arr["ID"]                  = $value['ZPX_ID'];
       $arr["RoadStationName"]     = $value['name'];
-      $arr["RoadStationNumber"]   = intval(substr($value['ZPX_ID'],strpos($value['ZPX_ID'],'-')+1)); //to_integer
-      $arr["RoadStationNameKana"] = $value['name_furi'];
-      $arr["RoadStationGuide"]    = $value['introduction'];
-      $arr["CatchCopy"]           = $value['catch_copy'];
-      $arr["PhotoUrl"]            = $value['thumbnail'];
-      $arr["RegistryYear"]        = $value['registry_year'];
       $prefecture_id              = intval(substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-'))); //to_integer
       $arr["PrefectureCD"]        = $prefecture_id;
       $arr["PrefectureID"]        = $prefecture_id;
@@ -300,75 +303,14 @@ class RoadstationService
       $arr["Latitude"]          = $address['latitude_x'];
       $arr["Longitude"]         = $address['latitude_y'];
       $arr["MapCode"]           = $address['map_code'];
-      $arr["PrefectureNameCD"]  = $address['prefecture'];
-      $arr["PhoneNumber"]       = $address['tel'];
-      $arr["Elebation"]         = $address['elebation'];
-      $arr['RoadStationAddress'] = $address['prefecture'] . $address['local_address']; //都道府県＋市区町村以下
-      $urls = RoadstationUrls::where('CID',$value['CID'])->get();
-      $urls = $urls[0];
-      $arr["Twitter"]   = $urls['twitter'];
-      $arr["Facebook"]  = $urls['facebook'];
-      $arr["Instagram"] = $urls['instagram'];
-      $arr["HomePage"]  = $urls['web'];
-      $parking = RoadstationUrls::where('CID',$value['CID'])->get();
-      $parking = $parking[0];
-      $arr["LargeParkingLot"]         = $urls['learge_parking_number'];
-      $arr["ParkingLotHandicap"]      = $urls['disabilities_parking_number'];
-      $arr["ParkingLotNormalNumber"]  = $urls['middle_parking_number'];
       $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
       if(!empty($business_hour[0])){
         $business_hour = $business_hour[0];
         $arr["BusinessHours"]             = $business_hour['start_time'] . '～' . $business_hour['end_time'];
-        $arr["BusinessHoursInformation"]  = $business_hour['time_sightseeing_code'];
-        $arr["Holiday"]                   = $business_hour['regular_holiday'];
       }
-      $stamp = RoadstationBusinessStampInformation::where('CID',$value['CID'])->get();
-      if(!empty($stamp[0])){
-        $stamp = $stamp[0]->getAttributes();
-        $arr['StampContent'] = $stamp['installation_location'];
-      }
-      $local_road   = LocationRoad::where('CID',$value['CID'])->get();
-      // 道路情報はDB側が不特定多数に対し、API先は数が固定されているため、道路タイプによって挿入先を変更させる
-      $cnt_highway  = 1;
-      $cnt_majorway = 1;
-      foreach($local_road as $key => $item){
-        if($item['location_road_type'] == '1'){
-          $arr["NationalHighWay".$cnt_highway] = $item['road_number'];
-          $cnt_highway++;
-        } else if($item['location_road_type'] == '2'){
-          $arr["MajorPrefecturalRoad".$cnt_majorway] = $item['road_number'];
-          $cnt_majorway++;
-        }
-      }
-      $equipment      = AncillaryEquipments::where('CID',$value['CID'])->get();
-      $arr_equipment  = [];
-      foreach($equipment as $key => $item){
-        // insert_bool
-        $arr['RegularParkingLotWithOrWithoutWirelessLAN'] = $item['equipment_id'] == '3' ? true : false;
-        $arr['Laundry']   = $item['equipment_id'] == '2' ? true : false;
-        $arr_equipment[]  = $item['equipment_id'];
-      }
-      $mst_facility = MstFacility::all();
-      $facility     = FacilityDetail::where('ZPX_ID',$item['ZPX_ID'])->get();
-      $arr_facility = [];
-      if(0 < $facility->count()){
-        foreach($facility as $key => $item){
-          $item           = $item->getAttributes();
-          $arr_facility[] = $tmp['facility_code'];
-        }
-      }
-      $arr['Facility']  = $arr_facility;
-      $arr['Service']   = $arr_equipment;
-      $sightseeing  = RoadstationSightseeing::where('CID',$value['CID'])->get();
-      $arr_sight    = [];
-      foreach($sightseeing as $key => $item){
-        $arr_sight[] = $item['name'];
-      }
-      $arr['TouristFacility'] = implode('、',$arr_sight);
       $ret[] = $arr;
     }
     return $ret;
-
   }
   public function apidetail($zpx_id){
     $ret = [];
