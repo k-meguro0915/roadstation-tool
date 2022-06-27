@@ -8,6 +8,7 @@
     <div class="mb-5">
       <p class="d-inline">総数{{$count}}件</p>
       <a class="d-inline float-right" href="/show_deleted_facilities"><button class="btn btn-primary">削除された付帯施設</button></a>
+      <a class="d-inline float-right mx-5" href="/create_roadstation"><button class="btn btn-primary">新規登録</button></a>
     </div>
 		<table class="table">
 			<thead>

@@ -10,14 +10,31 @@ use App\Services\RoadstationService;
 use App\Services\DataVersionService;
 class APIController extends Controller
 {
+    protected $error_msg_key = 'wrong or nothing API Key';
     //
-    public function getRoadstations(){
+    private function checkAPIKey($request){
+      $key = $request->key;
+      if($key == '3fpe8F9e_9KdJFHE88YL'){
+        return true;
+      }
+      return false;
+    }
+    public function getRoadstations(Request $request){
       try{
-        $service = new RoadstationService;
-        $ret = $service->apiAll();
-        $result = [
-          'result' => $ret
-        ];
+        if($this->checkAPIKey($request)){
+          $service = new RoadstationService;
+          $ret = $service->apiAll();
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
       } catch(\Exception $e){
         $result = [
             'result' => false,
@@ -29,13 +46,22 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
-    public function getRoadstationDetail($zpx_id){
+    public function getRoadstationsLight(Request $request){
       try{
-        $service = new RoadstationService;
-        $ret = $service->apidetail($zpx_id);
-        $result = [
-          'result' => $ret
-        ];
+        if($this->checkAPIKey($request)){
+          $service = new RoadstationService;
+          $ret = $service->apiLight();
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
       } catch(\Exception $e){
         $result = [
             'result' => false,
@@ -47,13 +73,23 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
-    public function getFacilities(){
+    public function getRoadstationDetail(Request $request){
       try{
-        $service = new FacilityService;
-        $ret = $service->all();
-        $result = [
-          'result' => $ret
-        ];
+        if($this->checkAPIKey($request)){
+          $zpx_id = $request->ZPX_ID;
+          $service = new RoadstationService;
+          $ret = $service->apidetail($zpx_id);
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
       } catch(\Exception $e){
         $result = [
             'result' => false,
@@ -65,13 +101,22 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
-    public function getFacilityDetail(Request $uid){
+    public function getFacilities(Request $request){
       try{
-        $service = new RoadstationService;
-        $ret = $service->detail($uid);
-        $result = [
-          'result' => $ret
-        ];
+        if($this->checkAPIKey($request)){
+          $service = new FacilityService;
+          $ret = $service->all();
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
       } catch(\Exception $e){
         $result = [
             'result' => false,
@@ -83,13 +128,49 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
-    public function getDatabaseVersion(){
+    public function getFacilityDetail(Request $request){
       try{
-        $service = new DataVersionService;
-        $ret = $service->get();
+        if($this->checkAPIKey($request)){
+          $service = new RoadstationService;
+          $ret = $service->detail($uid);
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
+      } catch(\Exception $e){
         $result = [
-          'result' => $ret
+            'result' => false,
+            'error' => [
+                'messages' => [$e->getMessage()]
+            ],
         ];
+        return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
+    }
+    public function getDatabaseVersion(Request $request){
+      try{
+        if($this->checkAPIKey($request)){
+          $service = new DataVersionService;
+          $ret = $service->get();
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => ['wrong or nothing API Key']
+            ],
+          ];
+        }
       } catch(\Exception $e){
         $result = [
             'result' => false,
