@@ -24,6 +24,7 @@ use App\Models\RestaurantInformation;
 use App\Models\FacilitiesBusinessHours;
 use App\Models\AncillaryEquipments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoadstationService
 {
@@ -277,15 +278,6 @@ class RoadstationService
     }
     return $ret;
   }
-  //  Area: String = ""
-  // ID: String = ""
-  // Latitude: Double = 0.0
-  // Longitude: Double = 0.0
-  // MapCode: String = ""
-  // PrefectureCD: Long = 0
-  // PrefectureID: Long = 0
-  // RoadStationName: String = ""
-  // BusinessHours: String = ""
   public function apiLight(){
     $ret = [];
     $roadstation = Roadstation::orderBy('ZPX_ID','asc')->get();

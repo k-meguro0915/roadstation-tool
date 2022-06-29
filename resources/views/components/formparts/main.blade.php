@@ -1,16 +1,11 @@
 <!-- 道の駅 -->
-<div class="imagePreview"></div>
-<div class="input-group">
-  <label class="input-group-btn">
-    <span class="btn btn-primary">
-      写真をアップロード<input type="file" style="display:none" class="uploadFile">
-    </span>
-  </label>
-  <input type="text" class="form-control" readonly="">
+<div class="form-group">
+  <label for="formGroupExampleInput">ZPX_ID</label>
+  <input value="@if(isset($roadstation['roadstation'][0]->ZPX_ID)){{ $roadstation['roadstation'][0]->ZPX_ID }}@endif" name="roadstation[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">CID</label>
-  <input value="@if(isset($roadstation['roadstation'][0]->CID)){{ $roadstation['roadstation'][0]->CID }}@endif" name="roadstation[CID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="CID">
+  <input value="@if(isset($roadstation['roadstation'][0]->CID)){{ $roadstation['roadstation'][0]->CID }}@endif" name="roadstation[CID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="01-0-001">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">道の駅 名称</label>
@@ -28,6 +23,10 @@
   <label for="formGroupExampleInput2">紹介文</label>
   <textarea name="roadstation[introduction]" class="form-control" id="exampleFormControlTextarea1" rows="3">@if(isset($roadstation['roadstation'][0]->introduction)){{ $roadstation['roadstation'][0]->introduction }}@endif
   </textarea>
+</div>
+<div class="form-group">
+  <label for="formGroupExampleInput">お土産</label>
+  <input value="@if(isset($roadstation['roadstation'][0]->gift)){{ $roadstation['roadstation'][0]->gift }}@endif" name="roadstation[gift]" type="text" class="form-control" id="formGroupExampleInput">
 </div>
 <div class="location-roads mb-5">
   <div class="form-group">

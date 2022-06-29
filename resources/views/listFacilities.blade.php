@@ -8,7 +8,7 @@
     <div class="mb-5">
       <p class="d-inline">総数{{$count}}件</p>
       <a class="d-inline float-right" href="/show_deleted_facilities"><button class="btn btn-primary">削除された付帯施設</button></a>
-      <a class="d-inline float-right mx-5" href="/create_roadstation"><button class="btn btn-primary">新規登録</button></a>
+      <a class="d-inline float-right mx-5" href="/create_facility"><button class="btn btn-primary">新規登録</button></a>
     </div>
 		<table class="table">
 			<thead>
@@ -31,8 +31,8 @@
 					<td>{{ $item['category_code'] }}</td>
 					<td><a href="/facilities/show/{{$item['UID']}}">{{ $item['name'] }}</a></td>
 					<td>
-						<a href="/edit_facility/{{$item['UID']}}" class="btn btn-primary disabled">編集</a>
-						<a href="/delete_facility/{{$item['UID']}}" class="btn btn-danger">削除</a>
+						<a href="/facilities/edit/{{$item['UID']}}" class="btn btn-primary">編集</a>
+						<a href="/facilities/delete/{{$item['UID']}}" class="btn btn-danger">削除</a>
 					</td>
 				</tr>
 				@endforeach

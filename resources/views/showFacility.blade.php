@@ -65,6 +65,29 @@
         </tr>
       </thead>
     </table>
+    <h3>営業情報</h3>
+    @if(empty($businesshours))
+    <p>営業情報はありません。</p>
+    @else
+      <table class="table">
+        <thead>
+          @foreach($businesshours as $key => $item)
+          <tr>
+            <th>営業時間{{$key + 1}}</th>
+            <th>
+            {{ $businesshours[$key]['start_time'] }}～{{ $businesshours[$key]['end_time'] }}
+            </th>
+          </tr>
+          <tr>
+            <th>営業時間補足{{$key + 1}}</th>
+            <th>
+              {{ $businesshours[$key]['time_supplement'] }}
+            </th>
+          </tr>
+          @endforeach
+        </thead>
+      </table>
+    @endif
     <h3>決済手段</h3>
     <table class="table">
       <thead>

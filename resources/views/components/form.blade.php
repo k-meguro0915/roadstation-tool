@@ -1,10 +1,10 @@
 @include('components.formparts.main')
-@include('components.formparts.seasonalEvents')
 <!-- 施設一覧 -->
+{{--
 <div class="mb-5 facility-list d-flex flex-column align-items-center">
   <h3 class="text-center mb-5"><u>施設一覧</u></h3>
   <ul class="" style="list-style:none;">
-    <?php foreach($equipments as $key => $value) {?>
+    @foreach($equipments as $key => $value)
     <li class="ml-3 d-inline btn-group">
       <button type="button" class="btn btn-primary mt-3"><?php print($value->name); ?></button>
       <button
@@ -15,9 +15,10 @@
         +
       </button>
     </li>
-    <?php } ?>
+    @endforeach
   </ul>
 </div>
+--}}
 <!-- 設備一覧 -->
 <div class="mb-5 facility-list d-flex flex-column align-items-center">
   <h3 class="text-center mb-5"><u>サービス一覧</u></h3>
@@ -46,6 +47,8 @@
   </ul>
 </div>
 @include('components.formparts.basicInformation')
+@include('components.formparts.contacts')
+@include('components.formparts.seasonalEvents')
 <div id="facility-list"></div>
 @include('components.formparts.facilitieCard')
 <!-- submit -->

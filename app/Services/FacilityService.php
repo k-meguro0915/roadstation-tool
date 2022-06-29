@@ -8,6 +8,7 @@ use App\Models\BathingInformation;
 use App\Models\FacilityEvent;
 use App\Models\RestaurantInformation;
 use App\Models\FacilitiesBusinessHours;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class FacilityService
@@ -45,17 +46,78 @@ class FacilityService
     // $ret['event'] = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get();
     $ret['restaurant'] = RestaurantInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
     $ret['businesshours'] = FacilitiesBusinessHours::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    $tmp = [];
+    foreach($ret['businesshours'] as $key => $item){
+      $tmp[] = $item->getAttributes();
+    }
+    $ret['businesshours'] = $tmp;
     return $ret;
   }
   // 道の駅登録
   // 各メソッドでupdateOrCreateが試せるかを再思考
   public function store($request) {
-    
+    DB::beginTransaction();
+    try{
+      $facility = $request->facility;
+      $this->createRelationTable(new FacilityDetail,$facility);
+      $zpx_id = $facility['ZPX_ID'];
+      $uid = $facility['UID'];
+      if(!empty($request->spring)){
+        $spring = $request->spring;
+        $spring['ZPX_ID'] = $zpx_id;
+        $spring['UID'] = $uid;
+        $this->createRelationTable(new BathingInformation,$spring);
+      }
+      if(!empty($request->restaurant)){
+        $restaurant = $request->restaurant;
+        $restaurant['ZPX_ID'] = $zpx_id;
+        $restaurant['UID'] = $uid;
+        $this->createRelationTable(new RestaurantInformation,$restaurant);
+      }
+      if(!empty($request->payment)){
+        $payment = $request->payment;
+        $payment['ZPX_ID'] = $zpx_id;
+        $payment['UID'] = $uid;
+        // dd($payment);
+        $this->createRelationTable(new FacilityPayment,$payment);
+      }
+      if(!empty($request->business_info)){
+        $business_info = $request->business_info;
+        $cnt = 0;
+        foreach($business_info as $key => $item){
+          if(empty($item['start_time'])) continue;
+          $item['id'] = $cnt;
+          $item['ZPX_ID'] = $zpx_id;
+          $item['UID'] = $uid;
+          $this->createRelationTable(new FacilitiesBusinessHours,$item,['ZPX_ID','UID','id']);
+          $cnt++;
+        }
+      }
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollback();
+      return false;
+    }
+    return true;
+  }
+  
+  private function createRelationTable($model,$record,$collation=['ZPX_ID','UID']){
+    $model->upsert( $record,$collation );
   }
   // 道の駅更新
-  public function update($request){
-  }
-  public function delete($cid){
+  public function changeDeleteFlg($uid,$flg){
+    DB::beginTransaction();
+    try{
+      FacilityDetail::where([['UID','=',$uid]])->update(['is_delete'=>$flg]);
+      BathingInformation::where([['UID','=',$uid]])->update(['is_delete'=>$flg]);
+      RestaurantInformation::where([['UID','=',$uid]])->update(['is_delete'=>$flg]);
+      FacilityPayment::where([['UID','=',$uid]])->update(['is_delete'=>$flg]);
+      FacilitiesBusinessHours::where([['UID','=',$uid]])->update(['is_delete'=>$flg]);
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollback();
+      return false;
+    }
     return true;
   }
 }

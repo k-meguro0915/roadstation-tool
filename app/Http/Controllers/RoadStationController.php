@@ -43,6 +43,7 @@ class RoadStationController extends Controller
   }
   // 道の駅作成：登録
   public function store(Request $request){
+    dd($request);
     $this->service->store($request);
     return redirect('/');
   }
