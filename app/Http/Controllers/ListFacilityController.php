@@ -36,6 +36,7 @@ class ListFacilityController extends Controller
       'payment' => $facility['payment'][0]->getAttributes(),
       'restaurant' => $restaurant,
       'businesshours' => $facility['businesshours'],
+      'events' => $facility['event'],
     ]);
   }
   public function showDeleted(){
@@ -67,6 +68,7 @@ class ListFacilityController extends Controller
       'payment' => $facility['payment'][0]->getAttributes(),
       'restaurant' => $restaurant,
       'businesshours' => $facility['businesshours'],
+      'events' => $facility['event'],
     ]);
   }
   public function update(Request $request){

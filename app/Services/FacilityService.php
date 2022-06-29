@@ -43,7 +43,7 @@ class FacilityService
     $ret['facility'] = FacilityDetail::where([['UID','=',$uid],['is_delete','=','0']])->get();
     $ret['payment'] = FacilityPayment::where([['UID','=',$uid],['is_delete','=','0']])->get();
     $ret['bathing'] = BathingInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
-    // $ret['event'] = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get();
+    $ret['event'] = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get('contents');
     $ret['restaurant'] = RestaurantInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
     $ret['businesshours'] = FacilitiesBusinessHours::where([['UID','=',$uid],['is_delete','=','0']])->get();
     $tmp = [];
@@ -51,6 +51,11 @@ class FacilityService
       $tmp[] = $item->getAttributes();
     }
     $ret['businesshours'] = $tmp;
+    $tmp = [];
+    foreach($ret['event'] as $key => $item){
+      $tmp[] = $item->getAttributes()['contents'];
+    }
+    $ret['event'] = $tmp;
     return $ret;
   }
   // 道の駅登録
@@ -90,6 +95,20 @@ class FacilityService
           $item['ZPX_ID'] = $zpx_id;
           $item['UID'] = $uid;
           $this->createRelationTable(new FacilitiesBusinessHours,$item,['ZPX_ID','UID','id']);
+          $cnt++;
+        }
+      }
+      if(!empty($request->event)){
+        $event = $request->event;
+        $cnt = 0;
+        $arr = [];
+        foreach($event as $key => $item){
+          if(empty($item)) continue;
+          $arr['id'] = $cnt;
+          $arr['ZPX_ID'] = $zpx_id;
+          $arr['UID'] = $uid;
+          $arr['contents'] = $item;
+          $this->createRelationTable(new FacilityEvent,$arr,['ZPX_ID','UID','id']);
           $cnt++;
         }
       }

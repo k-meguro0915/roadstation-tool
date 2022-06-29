@@ -132,11 +132,19 @@
       </thead>
     </table>
     <h3>イベント情報</h3>
-    @if(empty($event))
+    @if(empty($events))
       <p>イベント情報はありません。</p>
     @else
       <table class="table">
         <thead>
+          @foreach($events as $key => $item)
+          <tr>
+            <th>イベント情報{{$key + 1}}</th>
+            <th>
+            {{ $item }}
+            </th>
+          </tr>
+          @endforeach
         </thead>
       </table>
     @endif

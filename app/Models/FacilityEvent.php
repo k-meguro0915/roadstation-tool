@@ -13,7 +13,7 @@ class FacilityEvent extends Model
         'ZPX_ID',
         'UID',
         'id',
-        'information'
+        'contents'
     ];
-    protected $primaryKey = ['ZPX_ID','UID'];
+    protected $primaryKey = ['ZPX_ID','UID','id'];
 }
