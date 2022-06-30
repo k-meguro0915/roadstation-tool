@@ -201,7 +201,7 @@ class RoadstationService
   // APIによる取得処理
   public function apiAll(){
     $ret = [];
-    $roadstation = Roadstation::orderBy('ZPX_ID','asc')->get();
+    $roadstation = Roadstation::where([['is_delete','=','0']])->orderBy('ZPX_ID','asc')->get();
     foreach($roadstation as $key => $item){
       $arr = $this->initApiArray(); //道の駅単位の初期化
       $value = $item->getAttributes();
@@ -232,11 +232,13 @@ class RoadstationService
       $arr["Facebook"]  = $urls['facebook'];
       $arr["Instagram"] = $urls['instagram'];
       $arr["HomePage"]  = $urls['web'];
-      $parking = RoadstationUrls::where('CID',$value['CID'])->get();
-      $parking = $parking[0];
-      $arr["LargeParkingLot"]         = $urls['learge_parking_number'];
-      $arr["ParkingLotHandicap"]      = $urls['disabilities_parking_number'];
-      $arr["ParkingLotNormalNumber"]  = $urls['middle_parking_number'];
+      $parking = RoadstationParking::where('CID',$value['CID'])->get();
+      if(!empty($parking[0])){
+        $parking = $parking[0];
+        $arr["LargeParkingLot"]         = $parking['learge_parking_number'];
+        $arr["ParkingLotHandicap"]      = $parking['disabilities_parking_number'];
+        $arr["ParkingLotNormalNumber"]  = $parking['middle_parking_number'];
+      }
       $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
       if(!empty($business_hour[0])){
         $business_hour = $business_hour[0];
@@ -293,7 +295,7 @@ class RoadstationService
   }
   public function apiLight(){
     $ret = [];
-    $roadstation = Roadstation::orderBy('ZPX_ID','asc')->get();
+    $roadstation = Roadstation::where([['is_delete','=','0']])->orderBy('ZPX_ID','asc')->get();
     foreach($roadstation as $key => $item){
       $arr = []; //道の駅単位の初期化
       $value = $item->getAttributes();
@@ -305,8 +307,8 @@ class RoadstationService
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
       $arr["Area"]              = $address['prefecture'];
-      $arr["Latitude"]          = $address['latitude_x'];
-      $arr["Longitude"]         = $address['latitude_y'];
+      $arr["Latitude"]          = $address['latitude_y'];
+      $arr["Longitude"]         = $address['latitude_x'];
       $arr["MapCode"]           = $address['map_code'];
       $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
       if(!empty($business_hour[0])){
@@ -337,8 +339,8 @@ class RoadstationService
     $address = RoadstationAddress::where('CID',$value['CID'])->get();
     $address = $address[0];
     $arr["Area"]                = $address['prefecture'];
-    $arr["Latitude"]            = $address['latitude_x'];
-    $arr["Longitude"]           = $address['latitude_y'];
+    $arr["Latitude"]            = $address['latitude_y'];
+    $arr["Longitude"]           = $address['latitude_x'];
     $arr["MapCode"]             = $address['map_code'];
     $arr["PrefectureNameCD"]    = $address['prefecture'];
     $arr["PhoneNumber"]         = $address['tel'];
@@ -350,11 +352,11 @@ class RoadstationService
     $arr["Facebook"]  = $urls['facebook'];
     $arr["Instagram"] = $urls['instagram'];
     $arr["HomePage"]  = $urls['web'];
-    $parking = RoadstationUrls::where('CID',$value['CID'])->get();
+    $parking = RoadstationParking::where('CID',$value['CID'])->get();
     $parking = $parking[0];
-    $arr["LargeParkingLot"]         = $urls['learge_parking_number'];
-    $arr["ParkingLotHandicap"]      = $urls['disabilities_parking_number'];
-    $arr["ParkingLotNormalNumber"]  = $urls['middle_parking_number'];
+    $arr["LargeParkingLot"]         = $parking['learge_parking_number'];
+    $arr["ParkingLotHandicap"]      = $parking['disabilities_parking_number'];
+    $arr["ParkingLotNormalNumber"]  = $parking['middle_parking_number'];
     $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
     if(!empty($business_hour[0])){
       $business_hour = $business_hour[0];
@@ -411,42 +413,42 @@ class RoadstationService
   // API用の鋳型
   private function initApiArray(){
     $ret = [
-      'Area' => 'N/A',
-      'ID' => 'N/A',
-      'Latitude' => 'N/A',
-      'Longitude' => 'N/A',
-      'MapCode' => 'N/A',
-      'PrefectureNameCD' => 'N/A',
-      'PrefectureCD' => 'N/A',
-      'PrefectureID' => 'N/A',
-      'RoadStationAddress' => 'N/A',
-      'RoadStationName' => 'N/A',
-      'RoadStationNumber' => 'N/A',
-      'RoadStationGuide' => 'N/A',
-      'Twitter' => 'N/A',
-      'Facebook' => 'N/A',
-      'Instagram' => 'N/A',
-      'HomePage' => 'N/A',
-      'BusinessHours' => 'N/A',
-      'LargeParkingLot' => 'N/A',
-      'ParkingLotHandicap' => 'N/A',
-      'ParkingLotNormalNumber' => 'N/A',
-      'RegularParkingLotWithOrWithoutWirelessLAN' => 'N/A',
-      'TouristFacility' => 'N/A',
-      'CatchCopy' => 'N/A',
-      'Laundry' => 'N/A',
-      'PhoneNumber' => 'N/A',
-      'PhotoUrl' => 'N/A',
-      'BusinessHoursInformation' => 'N/A',
-      'Holiday' => 'N/A',
-      'RoadStationNameKana' => 'N/A',
-      'StampContent' => 'N/A',
-      'NationalHighWay1' => 'N/A',
-      'NationalHighWay2' => 'N/A',
-      'MajorPrefecturalRoad1' => 'N/A',
-      'MajorPrefecturalRoad2' => 'N/A',
-      'RegistryYear' => 'N/A',
-      'Facilities' => 'N/A',
+      'Area' => '',
+      'ID' => '',
+      'Latitude' => '',
+      'Longitude' => '',
+      'MapCode' => '',
+      'PrefectureNameCD' => '',
+      'PrefectureCD' => '',
+      'PrefectureID' => '',
+      'RoadStationAddress' => '',
+      'RoadStationName' => '',
+      'RoadStationNumber' => '',
+      'RoadStationGuide' => '',
+      'Twitter' => '',
+      'Facebook' => '',
+      'Instagram' => '',
+      'HomePage' => '',
+      'BusinessHours' => '',
+      'LargeParkingLot' => '',
+      'ParkingLotHandicap' => '',
+      'ParkingLotNormalNumber' => '',
+      'RegularParkingLotWithOrWithoutWirelessLAN' => '',
+      'TouristFacility' => '',
+      'CatchCopy' => '',
+      'Laundry' => '',
+      'PhoneNumber' => '',
+      'PhotoUrl' => '',
+      'BusinessHoursInformation' => '',
+      'Holiday' => '',
+      'RoadStationNameKana' => '',
+      'StampContent' => '',
+      'NationalHighWay1' => '',
+      'NationalHighWay2' => '',
+      'MajorPrefecturalRoad1' => '',
+      'MajorPrefecturalRoad2' => '',
+      'RegistryYear' => '',
+      'Facilities' => '',
     ];
     return $ret;
   }
