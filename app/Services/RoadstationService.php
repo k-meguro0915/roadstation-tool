@@ -95,95 +95,108 @@ class RoadstationService
   // 道の駅登録
   // 各メソッドでupdateOrCreateが試せるかを再思考
   public function store($request) {
-    // 各テーブルに使うデータの整形
-    $data = $request->all();
-    $roadstation  = isset($data['roadstation']) ? $data['roadstation'] : '';
-    $address      = isset($data['address']) ? $data['address'] : '';
-    $local_road   = isset($data['localroad']) ? $data['localroad'] : '';
-    $event        = isset($data['event']) ? $data['event'] : '';
-    $eventFlg     = isset($data['eventFlag']) ? $data['eventFlag'] : '';
-    $facility     = isset($data['facility']) ? $data['facility'] : '';
-    $equipment    = isset($data['service']) ? $data['service'] : '';
-    $basic        = isset($data['basic']) ? $data['basic'] : '';
-    $parking      = isset($data['parking']) ? $data['parking'] : '';
-    $stamp        = isset($data['stamp']) ? $data['stamp'] : '';
-    $urls         = isset($data['urls']) ? $data['urls'] : '';
-    // Log::debug($facility);
-    // 道の駅メインのテーブルにデータを取得し、返却されたデータからCIDを抜き出す。
-    if($roadstation != '') $inserted_station = $this->createRoadStation($roadstation);
-    $cid = $inserted_station['CID'];
-    // // 抜き出したCIDを元に各リレーションレコードを作成する
-    if($local_road != '') $this->createRelationRoadStation(new RoadstationAddress() ,$cid, $address);
-    if($basic != '') $this->createRelationRoadStation(new RoadstationBusinessHour() ,$cid, $basic);
-    if($stamp != '') $this->createRelationRoadStation(new RoadstationBusinessStampInformation() ,$cid, $stamp);
-    // $this->createRelationRoadStation(new RoadstationEval() ,$cid, $local_road);
-    if($parking != '') $this->createRelationRoadStation(new RoadstationParking() ,$cid, $parking);
-    // $this->createRelationRoadStation(new RoadstationSightseeing() ,$cid, $local_road);
-    if($urls != '') $this->createRelationRoadStation(new RoadstationUrls() ,$cid, $urls);
-    if($local_road != '') $this->createRelationRoadStation(new LocationRoad() ,$cid, $local_road);
-    // $this->createRelationRoadStation(new FacilitiesDetail() ,$cid, $local_road);
-    if($event != '') $this->createSeasonalInformation(new SeasonalInformation() ,$cid, $event);
-    if($eventFlg != '') $this->createRelationRoadStation(new SeasonalInformationFlag() ,$cid, $eventFlg);
-    // // 特殊な処理を行うレコードは個別の処理
-    if($equipment != '') $this->createAncillaryEquipments($cid, $equipment);
-    if($facility != '') $this->createIncidentalFacility($cid, $facility);
-  }
-  // 道の駅更新
-  public function update($request){
-    // 各テーブルに使うデータの整形
-    $data = $request->all();
-    $roadstation  = $data['roadstation'];
-    $this->updateRoadStation($roadstation);
-  }
-  // 道の駅基本情報の更新
-  private function updateRoadStation($record){
-    $model = new Roadstation();
-    $inserted_station = $model->where('CID',$record['CID'])
-                              ->update( $record ); 
-    return $inserted_station;
-  }
-  // 道の駅基本情報の登録
-  private function createRoadStation($record){
-    $model = new Roadstation();
-    $inserted_station = $model->create( $record );
-    return $inserted_station;
-  }
-  // 道の駅関連情報の登録
-  private function createRelationRoadStation($model,$cid,$record){
-    $record = array_merge( $record,array('CID' => $cid) );
-    $model->create( $record );
-  }
-  // 旬の情報登録
-  // 配列[0]～[2]の3つあり、再帰処理で登録
-  private function createSeasonalInformation($model,$cid,$record){
-    for($cnt = 1;$cnt <= 3;$cnt++){
-      $data = array('CID' => $cid);
-      $data = array_merge($data,array("title" => $record['title' . $cnt]));
-      $data = array_merge($data,array("content" => $record['content' . $cnt]));
-      $data = array_merge($data,array("start_time" => $record['start_time' . $cnt]));
-      $data = array_merge($data,array("end_time" => $record['end_time' . $cnt]));
-      Log::debug($data);
-      $model->create( $data );
+    DB::beginTransaction();
+    try{
+      // 各テーブルに使うデータの整形
+      $data         = $request->all();
+      $roadstation  = isset($data['roadstation']) ? $data['roadstation'] : '';
+      $address      = isset($data['address'])     ? $data['address'] : '';
+      $local_road   = isset($data['localroad'])   ? $data['localroad'] : '';
+      $event        = isset($data['event'])       ? $data['event'] : '';
+      $eventFlg     = isset($data['eventFlag'])   ? $data['eventFlag'] : '';
+      $facility     = isset($data['facility'])    ? $data['facility'] : '';
+      $equipment    = isset($data['service'])     ? $data['service'] : '';
+      $basic        = isset($data['basic'])       ? $data['basic'] : '';
+      $parking      = isset($data['parking'])     ? $data['parking'] : '';
+      $stamp        = isset($data['stamp'])       ? $data['stamp'] : '';
+      $urls         = isset($data['urls'])        ? $data['urls'] : '';
+      $sightseeing  = isset($data['sightseeing']) ? $data['sightseeing'] : '';
+      // dd($event);
+      // 道の駅メインのテーブルにデータを取得し、返却されたデータからCIDを抜き出す。
+      if(!empty($roadstation))$this->createRelationTable(new Roadstation,$roadstation,['ZPX_ID','CID']);
+      $zpx_id = $roadstation['ZPX_ID'];
+      $cid = $roadstation['CID'];
+      // 抜き出したCIDを元に各リレーションレコードを作成する
+      if(!empty($address)){
+        $address['CID'] = $cid;
+        $this->createRelationTable(new RoadstationAddress(),$address);
+      }
+      if(!empty($basic)){
+        $basic['CID'] = $cid;
+        $this->createRelationTable(new RoadstationBusinessHour(),$basic);
+      }
+      if(!empty($stamp)){
+        $tmp = [];
+        foreach($stamp as $key => $item){
+          $tmp[] = [
+            'CID'=>$cid,
+            'id'=>$key,
+            'installation_location'=>$item['installation_location'],
+            'start_time'=>$item['start_time']
+          ];
+        }
+        $this->createRelationTable(new RoadstationBusinessStampInformation(), $tmp,['CID','id']);
+      }
+      if(!empty($sightseeing)){
+        $tmp =[];
+        foreach($sightseeing as $key => $item){
+          $tmp[] = ['CID'=>$cid,'id'=>$key,'name'=>$item];
+        }
+        $this->createRelationTable(new RoadstationSightseeing(),$tmp,['CID','id']);
+      }
+      if(!empty($urls)){
+        $urls['CID'] = $cid;
+        $this->createRelationTable(new RoadstationUrls(), $urls);
+      }
+      if(!empty($local_road)){
+        $tmp = [];
+        foreach($local_road as $key => $item){
+          $tmp[] = [
+            'CID'=>$cid,
+            'location_road_id'=>$key,
+            'location_road_type'=>$item['location_road_type'],
+            'road_number'=>$item['road_number'],
+            'road_name'=>$item['road_name'],
+          ];
+        }
+        $this->createRelationTable(new LocationRoad() , $tmp);
+      }
+      if(!empty($event)){
+        $tmp = [];
+        foreach($event as $key => $item){
+          $tmp[] = [
+            'CID'=>$cid,
+            'id'=>$key,
+            'title'=>$item['title'],
+            'content'=>$item['content'],
+            'start_time'=>$item['start_time'],
+            'end_time'=>$item['end_time'],
+          ];
+        }
+        $this->createRelationTable(new SeasonalInformation(),$tmp);
+      }
+      if(!empty($eventFlg)){
+        $eventFlg['CID'] = $cid;
+        $this->createRelationTable(new SeasonalInformationFlag(),$eventFlg);
+      }
+      if(!empty($equipment)){
+        $tmp =[];
+        foreach($equipment as $key => $item){
+          $tmp[] = ['CID'=>$cid,'equipment_id'=>$key];
+        }
+        $this->createRelationTable(new AncillaryEquipments,$tmp,['CID','equipment_id']);
+      }
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollback();
+      dd($e);
+      return false;
     }
     return true;
   }
-  // 道の駅設備情報の登録
-  private function createAncillaryEquipments($cid,$record){
-    $model = new AncillaryEquipments();
-    $equipments = array('equipment_id' => implode($record));
-    $equipments = array_merge($equipments,array('CID' => $cid));
-    $model->create( $equipments );
-    return true;
-  }
-  // 道の駅施設情報の登録
-  private function createIncidentalFacility($cid,$record){
-    $model = new FacilityDetail();
-    foreach($record as $key => $value){
-      $data = $value;
-      $data = array_merge($data,array('CID' => $cid));
-      $model->create( $data );
-    }
-    return true;
+  private function createRelationTable($model,$record,$collation=['CID']){
+    // dd($record);
+    $model->upsert( $record,$collation );
   }
   // APIによる取得処理
   public function apiAll(){

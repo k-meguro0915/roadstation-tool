@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use Illuminate\Support\Facades\Log;
+use App\Models\Roadstation;
 use App\Models\FacilityDetail;
 use App\Models\FacilityPayment;
 use App\Models\BathingInformation;
@@ -122,6 +123,10 @@ class FacilityService
   
   private function createRelationTable($model,$record,$collation=['ZPX_ID','UID']){
     $model->upsert( $record,$collation );
+  }
+  public function checkRoadStation($uid){
+    $zpx_id = FacilityDetail::where([['UID','=',$uid]])->get('ZPX_ID')[0]->getAttributes()['ZPX_ID'];
+    return Roadstation::where([['ZPX_ID','=',$zpx_id],['is_delete','=','1']])->count();
   }
   // 道の駅更新
   public function changeDeleteFlg($uid,$flg){

@@ -1,0 +1,1 @@
+ALTER TABLE `roadstation_business_stamp_information` CHANGE `start_time` `start_time` VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;

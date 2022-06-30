@@ -15,6 +15,7 @@
 					<th scope="col">UID</th>
 					<th scope="col">カテゴリID</th>
 					<th scope="col">施設名称</th>
+					<th scope="col">復元</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,6 +28,9 @@
 					<td>{{ $item['UID'] }}</td>
 					<td>{{ $item['category_code'] }}</td>
 					<td>{{ $item['name'] }}</td>
+          <td>
+						<a href="/facilities/restore/{{$item['UID']}}" class="btn btn-primary">復元</a>
+					</td>
 				</tr>
 				@endforeach
 			</tbody>

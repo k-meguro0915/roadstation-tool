@@ -23,6 +23,7 @@ Route::get('/facilities/show/{UID}',[FacilityController::class,'show']);
 Route::get('/facilities/edit/{UID}',[FacilityController::class,'edit']);
 Route::post('/facilities/edit/store',[FacilityController::class,'update']);
 Route::get('/facilities/delete/{UID}',[FacilityController::class,'delete']);
+Route::get('/facilities/restore/{UID}',[FacilityController::class,'restore']);
 Route::get('/create_facility',[ListFacilityController::class,'create']);
 Route::post('/create_facility/store',[ListFacilityController::class,'store']);
 Route::get('/create_roadstation',[RoadStationController::class,'index']);

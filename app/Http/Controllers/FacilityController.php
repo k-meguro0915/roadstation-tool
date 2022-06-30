@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\FacilityService;
+use App\Services\RoadstationService;
 use App\Services\DataVersionService;
 // モデル連携
 use App\Models\MstFacility;
@@ -64,6 +65,19 @@ class FacilityController extends Controller
   }
   public function delete($uid){
     $ret = $this->service->changeDeleteFlg($uid,'1');
+    // データバージョンアップ
+    if($ret == true){
+      $version = new DataVersionService();
+      $version->update();
+    }
+    return redirect('/facilities');
+  }
+  public function restore($uid){
+    $is_deleted_roadstation = $this->service->checkRoadStation($uid);
+    if($is_deleted_roadstation >= 1){
+      return redirect('/facilities');
+    }
+    $ret = $this->service->changeDeleteFlg($uid,'0');
     // データバージョンアップ
     if($ret == true){
       $version = new DataVersionService();

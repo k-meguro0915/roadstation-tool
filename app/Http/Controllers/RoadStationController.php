@@ -43,8 +43,13 @@ class RoadStationController extends Controller
   }
   // 道の駅作成：登録
   public function store(Request $request){
-    dd($request);
-    $this->service->store($request);
+    // dd($request);
+    $ret = $this->service->store($request);
+    // データバージョンアップ
+    if($ret == true){
+      $version = new DataVersionService();
+      $version->update();
+    }
     return redirect('/');
   }
   // 道の駅編集

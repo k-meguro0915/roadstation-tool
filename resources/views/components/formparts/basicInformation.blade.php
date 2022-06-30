@@ -105,8 +105,20 @@
             <input value="@if(isset($roadstation['parking'][0]->disabilities_parking_number)){{ $roadstation['parking'][0]->disabilities_parking_number }}@endif" name="parking[disabilities_parking_number]" type="text" class="form-control" id="formGroupExampleInput">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">スタンプ設置場所</label>
-            <input value="@if(isset($roadstation['stamp'][0]->installation_location)){{ $roadstation['stamp'][0]->installation_location }}@endif" name="stamp[installation_location]" type="text" class="form-control" id="formGroupExampleInput">
+            <label for="formGroupExampleInput">スタンプ設置場所1</label>
+            <input value="@if(isset($roadstation['stamp'][0]->installation_location)){{ $roadstation['stamp'][0]->installation_location }}@endif" name="stamp[0][installation_location]" type="text" class="form-control" id="formGroupExampleInput">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">スタンプ営業時間1</label>
+            <input value="@if(isset($roadstation['stamp'][0]->start_time)){{ $roadstation['stamp'][0]->start_time }}@endif" name="stamp[0][start_time]" type="text" class="form-control" id="formGroupExampleInput">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">スタンプ設置場所2</label>
+            <input value="@if(isset($roadstation['stamp'][1]->installation_location)){{ $roadstation['stamp'][1]->installation_location }}@endif" name="stamp[1][installation_location]" type="text" class="form-control" id="formGroupExampleInput">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">スタンプ営業時間2</label>
+            <input value="@if(isset($roadstation['stamp'][1]->start_time)){{ $roadstation['stamp'][1]->start_time }}@endif" name="stamp[1][start_time]" type="text" class="form-control" id="formGroupExampleInput">
           </div>
           <div class="form-group">
             <label for="formGroupExampleInput">登録年</label>
