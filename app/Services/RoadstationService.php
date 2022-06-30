@@ -219,8 +219,8 @@ class RoadstationService
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
       $arr["Area"]              = $address['prefecture'];
-      $arr["Latitude"]          = $address['latitude_x'];
-      $arr["Longitude"]         = $address['latitude_y'];
+      $arr["Latitude"]          = $address['latitude_y'];
+      $arr["Longitude"]         = $address['latitude_x'];
       $arr["MapCode"]           = $address['map_code'];
       $arr["PrefectureNameCD"]  = $address['prefecture'];
       $arr["PhoneNumber"]       = $address['tel'];
@@ -307,8 +307,8 @@ class RoadstationService
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
       $arr["Area"]              = $address['prefecture'];
-      $arr["Latitude"]          = $address['latitude_x'];
-      $arr["Longitude"]         = $address['latitude_y'];
+      $arr["Latitude"]          = $address['latitude_y'];
+      $arr["Longitude"]         = $address['latitude_x'];
       $arr["MapCode"]           = $address['map_code'];
       $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
       if(!empty($business_hour[0])){
@@ -339,8 +339,8 @@ class RoadstationService
     $address = RoadstationAddress::where('CID',$value['CID'])->get();
     $address = $address[0];
     $arr["Area"]                = $address['prefecture'];
-    $arr["Latitude"]            = $address['latitude_x'];
-    $arr["Longitude"]           = $address['latitude_y'];
+    $arr["Latitude"]            = $address['latitude_y'];
+    $arr["Longitude"]           = $address['latitude_x'];
     $arr["MapCode"]             = $address['map_code'];
     $arr["PrefectureNameCD"]    = $address['prefecture'];
     $arr["PhoneNumber"]         = $address['tel'];
