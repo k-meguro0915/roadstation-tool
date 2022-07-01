@@ -80,20 +80,20 @@ class RoadstationService
   public function show($zpx_id){
     $ret = array();
     // 各情報を持ってくる
-    $ret['roadstation'] = Roadstation::where('ZPX_ID',$zpx_id)->get();
+    $ret['roadstation']   = Roadstation::where('ZPX_ID',$zpx_id)->get();
     $cid = $ret['roadstation'][0]->CID;
-    $ret['address'] = RoadstationAddress::where('CID',$cid)->get();
-    $ret['localroad'] = LocationRoad::where('CID',$cid)->get();
-    $ret['event'] = SeasonalInformation::where('CID',$cid)->get();
-    $ret['eventFlag'] = SeasonalInformationFlag::where('CID',$cid)->get();
+    $ret['address']       = RoadstationAddress::where('CID',$cid)->get();
+    $ret['localroad']     = LocationRoad::where('CID',$cid)->get();
+    $ret['event']         = SeasonalInformation::where('CID',$cid)->get();
+    $ret['eventFlag']     = SeasonalInformationFlag::where('CID',$cid)->get();
     $ret['business_hour'] = RoadstationBusinessHour::where('CID',$cid)->get();
-    $ret['parking'] = RoadstationParking::where('CID',$cid)->get();
-    $ret['stamp'] = RoadstationBusinessStampInformation::where('CID',$cid)->get();
-    $ret['urls'] = RoadstationUrls::where('CID',$cid)->get();
-    $ret['sightseeing'] = RoadstationSightseeing::where('CID',$cid)->get(['name']);
-    $ret['equipments'] = AncillaryEquipments::where('CID',$cid)->get(['equipment_id']);
-    $ret['facilities'] = FacilityDetail::where('ZPX_ID',$zpx_id)->get();
-    $ret['contact'] = RoadstationContact::where('CID',$cid)->get();
+    $ret['parking']       = RoadstationParking::where('CID',$cid)->get();
+    $ret['stamp']         = RoadstationBusinessStampInformation::where('CID',$cid)->get();
+    $ret['urls']          = RoadstationUrls::where('CID',$cid)->get();
+    $ret['sightseeing']   = RoadstationSightseeing::where('CID',$cid)->get(['name']);
+    $ret['equipments']    = AncillaryEquipments::where('CID',$cid)->get(['equipment_id']);
+    $ret['facilities']    = FacilityDetail::where('ZPX_ID',$zpx_id)->get();
+    $ret['contact']       = RoadstationContact::where('CID',$cid)->get();
     return $ret;
   }
   // 道の駅登録

@@ -9,11 +9,12 @@
 			@csrf
       <div class="custom-file">
         <input type="file" name="file" class="custom-file-input" id="formFile">
-        <label for="formFile" class="custom-file-label" data-browse="参照">ファイル選択...</label>
+        <label for="formFile" class="custom-file-label" data-browse="参照" required>ファイル選択...</label>
       </div>
       <div class="mt-5">
-        <select class="form-control custom-select" aria-label="Default select" name="type">
-          <option>登録対象を選択</option>
+        <label>CSVの登録対象 ※道の駅か付帯設備かを選択</label>
+        <select class="form-control custom-select" aria-label="Default select" name="type" required>
+          <option value="">登録対象を選択</option>
           <option value="0">道の駅</option>
           <option value="1">付帯設備</option>
         </select>
