@@ -34,15 +34,15 @@
       <label for="formGroupExampleInput2">立地道路種別1</label>
       <option>道路種別を選択</option>
       <option 
-        @if(isset($localroad[0]) && $localroad[0]->location_road_type == "1") echo(checked) @endif 
+        @if(isset($localroad[0]) && $localroad[0]->location_road_type == "1") selected @endif 
         value="1"
       >国道</option>
       <option
-        @if(isset($localroad[0]) && $localroad[0]->location_road_type == "2") echo(checked) @endif 
+        @if(isset($localroad[0]) && $localroad[0]->location_road_type == "2") selected @endif 
         value="2"
       >公道</option>
       <option 
-        @if(isset($localroad[0]) && $localroad[0]->location_road_type == "3") echo(checked) @endif 
+        @if(isset($localroad[0]) && $localroad[0]->location_road_type == "3") selected @endif 
         value="3"
       >その他</option>
     </select>
@@ -60,15 +60,15 @@
       <label for="formGroupExampleInput2">立地道路種別2</label>
       <option>道路種別を選択</option>
       <option 
-        @if(!empty($localroad[1]) && $localroad[1]->location_road_type == "1") echo(checked) @endif 
+        @if(!empty($localroad[1]) && $localroad[1]->location_road_type == "1") selected @endif 
         value="1"
       >国道</option>
       <option
-        @if(isset($localroad[1]) && $localroad[1]->location_road_type == "2") echo(checked) @endif 
+        @if(isset($localroad[1]) && $localroad[1]->location_road_type == "2") selected @endif 
         value="2"
       >公道</option>
       <option 
-        @if(isset($localroad[1]) && $localroad[1]->location_road_type == "3") echo(checked) @endif 
+        @if(isset($localroad[1]) && $localroad[1]->location_road_type == "3") selected @endif 
         value="3"
       >その他</option>
     </select>

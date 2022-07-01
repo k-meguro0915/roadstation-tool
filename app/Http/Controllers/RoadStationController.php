@@ -57,7 +57,7 @@ class RoadStationController extends Controller
     $equipments = MstFacility::orderBy('id','asc')->get();
     $facilities = MstEquipments::orderBy('id','asc')->get();
     $roadstation = $this->service->show($zpx_id);
-    // dd($roadstation['business_hour']);
+    // dd($roadstation['localroad'][0]->location_road_type);
     return view('editRoadStation',[
       'equipments' => $equipments,
       'facilities' => $facilities,
