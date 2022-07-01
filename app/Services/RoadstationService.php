@@ -9,6 +9,7 @@ use App\Models\RoadstationBusinessStampInformation;
 use App\Models\RoadstationEval;
 use App\Models\RoadstationParking;
 use App\Models\RoadstationSightseeing;
+use App\Models\RoadstationContact;
 use App\Models\RoadstationUrls;
 use App\Models\LocationRoad;
 use App\Models\IncidentalFacility;
@@ -59,11 +60,13 @@ class RoadstationService
     $ret['parking']     = RoadstationParking::where('ZPX_ID',$zpx_id)->get();
     $ret['stamp']       = RoadstationBusinessStampInformation::where('ZPX_ID',$zpx_id)->get();
     $ret['urls']        = RoadstationUrls::where('ZPX_ID',$zpx_id)->get();
+    $ret['urls']        = RoadstationUrls::where('ZPX_ID',$zpx_id)->get();
   }
   public function edit($zpx_id){
     $ret = array();
     // 各情報を持ってくる
     $ret['roadstation'] = Roadstation::where('ZPX_ID',$zpx_id)->get();
+    $cid = $ret['roadstation']->CID;
     $ret['address']     = RoadstationAddress::where('ZPX_ID',$zpx_id)->get();
     $ret['localroad']   = LocationRoad::where('ZPX_ID',$zpx_id)->get();
     $ret['event']       = SeasonalInformation::where('ZPX_ID',$zpx_id)->get();
@@ -79,17 +82,18 @@ class RoadstationService
     // 各情報を持ってくる
     $ret['roadstation'] = Roadstation::where('ZPX_ID',$zpx_id)->get();
     $cid = $ret['roadstation'][0]->CID;
-    $ret['address'] = RoadstationAddress::where('cid',$cid)->get();
-    $ret['localroad'] = LocationRoad::where('cid',$cid)->get();
-    $ret['event'] = SeasonalInformation::where('cid',$cid)->get();
-    $ret['eventFlag'] = SeasonalInformationFlag::where('cid',$cid)->get();
-    $ret['business_hour'] = RoadstationBusinessHour::where('cid',$cid)->get();
-    $ret['parking'] = RoadstationParking::where('cid',$cid)->get();
-    $ret['stamp'] = RoadstationBusinessStampInformation::where('cid',$cid)->get();
-    $ret['urls'] = RoadstationUrls::where('cid',$cid)->get();
-    $ret['sightseeing'] = RoadstationSightseeing::where('cid',$cid)->get(['name']);
-    $ret['equipments'] = AncillaryEquipments::where('cid',$cid)->get();
+    $ret['address'] = RoadstationAddress::where('CID',$cid)->get();
+    $ret['localroad'] = LocationRoad::where('CID',$cid)->get();
+    $ret['event'] = SeasonalInformation::where('CID',$cid)->get();
+    $ret['eventFlag'] = SeasonalInformationFlag::where('CID',$cid)->get();
+    $ret['business_hour'] = RoadstationBusinessHour::where('CID',$cid)->get();
+    $ret['parking'] = RoadstationParking::where('CID',$cid)->get();
+    $ret['stamp'] = RoadstationBusinessStampInformation::where('CID',$cid)->get();
+    $ret['urls'] = RoadstationUrls::where('CID',$cid)->get();
+    $ret['sightseeing'] = RoadstationSightseeing::where('CID',$cid)->get(['name']);
+    $ret['equipments'] = AncillaryEquipments::where('CID',$cid)->get();
     $ret['facilities'] = FacilityDetail::where('ZPX_ID',$zpx_id)->get();
+    $ret['contact'] = RoadstationContact::where('CID',$cid)->get();
     return $ret;
   }
   // 道の駅登録
@@ -111,6 +115,7 @@ class RoadstationService
       $stamp        = isset($data['stamp'])       ? $data['stamp'] : '';
       $urls         = isset($data['urls'])        ? $data['urls'] : '';
       $sightseeing  = isset($data['sightseeing']) ? $data['sightseeing'] : '';
+      $contact      = isset($data['contacts'])    ? $data['contacts'] : '';
       // dd($event);
       // 道の駅メインのテーブルにデータを取得し、返却されたデータからCIDを抜き出す。
       if(!empty($roadstation))$this->createRelationTable(new Roadstation,$roadstation,['ZPX_ID','CID']);
@@ -147,6 +152,10 @@ class RoadstationService
       if(!empty($urls)){
         $urls['CID'] = $cid;
         $this->createRelationTable(new RoadstationUrls(), $urls);
+      }
+      if(!empty($contact)){
+        $contact['CID'] = $cid;
+        $this->createRelationTable(new RoadstationContact(), $contact);
       }
       if(!empty($local_road)){
         $tmp = [];

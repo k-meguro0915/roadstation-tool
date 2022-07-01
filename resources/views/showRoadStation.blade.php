@@ -222,6 +222,59 @@
           </tr>
         </table>
       @endif
+      <h3>連絡先情報</h3>
+      @if(!empty($roadstation["contact"][0]))
+        <table class="table">
+          <tr>
+            <th class="col-md-3">調査連絡先</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->contact_address}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先郵便番号</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->postal_code}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先住所</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->address}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先電話番号</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->tel}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先FAX番号</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->fax}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先担当者</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->manager}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先メルアド</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->mail}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">調査連絡先備考</th>
+            <th class="col-md-7">
+              {{$roadstation["contact"][0]->remarks}}
+            </th>
+          </tr>
+        </table>
+      @endif
       <h3>設備情報</h3>
       @if(!empty($roadstation["equipments"]))
         <table class="table">

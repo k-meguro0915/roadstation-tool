@@ -53,14 +53,26 @@ class RoadStationController extends Controller
     return redirect('/');
   }
   // 道の駅編集
-  public function edit($cid){
+  public function edit($zpx_id){
     $equipments = MstFacility::orderBy('id','asc')->get();
     $facilities = MstEquipments::orderBy('id','asc')->get();
-    $roadstation = $this->service->edit($cid);
+    $roadstation = $this->service->show($zpx_id);
+    // dd($roadstation['business_hour']);
     return view('editRoadStation',[
       'equipments' => $equipments,
       'facilities' => $facilities,
-      'roadstation' => $roadstation
+      'roadstation' => $roadstation['roadstation'][0]->getAttributes(),
+      'stamp' =>$roadstation['stamp'],
+      'address' => $roadstation['address'],
+      'localroad' => $roadstation['localroad'],
+      'event' => $roadstation['event'],
+      'eventFlag' => $roadstation['eventFlag'],
+      'business_hour' => $roadstation['business_hour'][0]->getAttributes(),
+      'parking' => $roadstation['parking'],
+      'urls' => $roadstation['urls'],
+      'sightseeing' => $roadstation['sightseeing'],
+      'roadstation_equipments' => $roadstation['equipments'],
+      'contact' => $roadstation['contact'][0]->getAttributes(),
     ]);
   }
   // 道の駅編集：更新

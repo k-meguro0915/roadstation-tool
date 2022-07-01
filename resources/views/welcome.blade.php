@@ -29,7 +29,7 @@
 					<td><a href="/show_roadstation/{{$item['ZPX_ID']}}">{{ $item['name'] }}</a></td>
 					<td>{{ $item['registry_year'] }}</td>
 					<td>
-						<a href="/edit_roadstation/{{$item['ZPX_ID']}}" class="btn btn-primary disabled">編集</a>
+						<a href="/edit_roadstation/{{$item['ZPX_ID']}}" class="btn btn-primary">編集</a>
 						<a href="/delete_roadstation/{{$item['ZPX_ID']}}" class="btn btn-danger">削除</a>
 					</td>
 				</tr>
