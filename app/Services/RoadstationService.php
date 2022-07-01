@@ -91,7 +91,7 @@ class RoadstationService
     $ret['stamp'] = RoadstationBusinessStampInformation::where('CID',$cid)->get();
     $ret['urls'] = RoadstationUrls::where('CID',$cid)->get();
     $ret['sightseeing'] = RoadstationSightseeing::where('CID',$cid)->get(['name']);
-    $ret['equipments'] = AncillaryEquipments::where('CID',$cid)->get();
+    $ret['equipments'] = AncillaryEquipments::where('CID',$cid)->get(['equipment_id']);
     $ret['facilities'] = FacilityDetail::where('ZPX_ID',$zpx_id)->get();
     $ret['contact'] = RoadstationContact::where('CID',$cid)->get();
     return $ret;
@@ -191,8 +191,9 @@ class RoadstationService
       if(!empty($equipment)){
         $tmp =[];
         foreach($equipment as $key => $item){
-          $tmp[] = ['CID'=>$cid,'equipment_id'=>$key];
+          $tmp[] = ['CID'=>$cid,'equipment_id'=>$item];
         }
+        AncillaryEquipments::where([['CID','=',$cid]])->delete();
         $this->createRelationTable(new AncillaryEquipments,$tmp,['CID','equipment_id']);
       }
       DB::commit();

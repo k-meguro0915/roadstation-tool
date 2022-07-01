@@ -57,7 +57,7 @@ class RoadStationController extends Controller
     $equipments = MstFacility::orderBy('id','asc')->get();
     $facilities = MstEquipments::orderBy('id','asc')->get();
     $roadstation = $this->service->show($zpx_id);
-    // dd($roadstation['localroad'][0]->location_road_type);
+    // dd($roadstation['equipments']->toArray());
     return view('editRoadStation',[
       'equipments' => $equipments,
       'facilities' => $facilities,
@@ -71,7 +71,7 @@ class RoadStationController extends Controller
       'parking' => $roadstation['parking'],
       'urls' => $roadstation['urls'],
       'sightseeing' => $roadstation['sightseeing'],
-      'roadstation_equipments' => $roadstation['equipments'],
+      'roadstation_equipments' => $roadstation['equipments']->toArray(),
       'contact' => $roadstation['contact'][0]->getAttributes(),
     ]);
   }
