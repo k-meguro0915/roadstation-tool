@@ -283,12 +283,12 @@ class RoadstationService
         $arr_equipment[]  = $item['equipment_id'];
       }
       $mst_facility = MstFacility::all();
-      $facility     = FacilityDetail::where('ZPX_ID',$item['ZPX_ID'])->get();
+      $facility     = FacilityDetail::where('ZPX_ID',$value['ZPX_ID'])->get();
       $arr_facility = [];
       if(0 < $facility->count()){
         foreach($facility as $key => $item){
-          $item           = $item->getAttributes();
-          $arr_facility[] = $tmp['facility_code'];
+          // $tmp           = $item->getAttributes();
+          $arr_facility[] = $item->getAttributes()['facility_code'];
         }
       }
       $arr['Facility']  = $arr_facility;
@@ -401,12 +401,12 @@ class RoadstationService
       $arr_equipment[]  = $item['equipment_id'];
     }
     $mst_facility = MstFacility::all();
-    $facility     = FacilityDetail::where('ZPX_ID',$item['ZPX_ID'])->get();
+    $facility     = FacilityDetail::where('ZPX_ID',$value['ZPX_ID'])->get();
     $arr_facility = [];
     if(0 < $facility->count()){
       foreach($facility as $key => $item){
-        $item           = $item->getAttributes();
-        $arr_facility[] = $tmp['facility_code'];
+        // $tmp           = $item->getAttributes();
+        $arr_facility[] = $item->getAttributes()['facility_code'];
       }
     }
     $arr['Facility']  = $arr_facility;
