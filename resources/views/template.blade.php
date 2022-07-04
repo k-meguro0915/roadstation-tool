@@ -7,6 +7,11 @@
 	</head>
 	<body>
 		@yield('navigation')
+    @if (session('flash_message'))
+      <div class="flash_message alert alert-primary text-center" role="alert">
+        {{ session('flash_message') }}
+      </div>
+    @endif
 		<div class="container">
 			@yield('content')
 		</div>
