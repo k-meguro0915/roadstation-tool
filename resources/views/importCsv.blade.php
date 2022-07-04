@@ -27,13 +27,16 @@
     <div id="confirm-section">
       <div id="spinner" style="display:none" class="spinner-border text-primary" role="status">
       </div>
-      <table id="confirm-table" style="display:none;max-height: 600px;" class="table overflow-auto">
-        <thead>
-          <tr></tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      <div id="confirm" style="display:none;">
+        <p>先頭100件を表示</p>
+        <table id="confirm-table" style="max-height: 600px;" class="table overflow-auto">
+          <thead>
+            <tr></tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
 	</div>
 @endsection
@@ -85,18 +88,7 @@
               dom += '</tr>';
               tbody.innerHTML += dom;
             }
-            // table_body.forEach(el => {
-            //   if(100 < cnt)break;
-            //   arr_td = el.split(',');
-            //   dom = '<tr>';
-            //   _regist.push(arr_td);
-            //   arr_td.forEach(item => {
-            //     dom += '<td>'+ item +'</td>';
-            //   })
-            //   dom += '</tr>';
-            //   tbody.innerHTML += dom;
-            //   cnt++;
-            // });
+            document.getElementById('confirm').style.display = "block";
             is_loading(false);
           };
         }
