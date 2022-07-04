@@ -23,35 +23,52 @@ use App\Models\FacilityEvent;
 use App\Models\RestaurantInformation;
 use App\Models\FacilitiesBusinessHours;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ImportCsvService
 {
   public function bulkInsertRoadstation($csv_data){
-    // dd($csv_data);
-    $this->createRoadstation($csv_data);
-    $this->createRoadstationAddress($csv_data);
-    $this->createLocationRoad($csv_data);
-    $this->createRoadstationBusinessHour($csv_data);
-    $this->createRoadstationBusinessStampInformation($csv_data);
-    $this->createRoadstationSightseeing($csv_data);
-    $this->createRoadstationParking($csv_data);
-    $this->createRoadstationContact($csv_data);
-    $this->createRoadstationUrls($csv_data);
-    $this->createRoadstationLabel($csv_data);
-    // $this->createIncidentalFacility($csv_data);
-    $this->createAncillaryEquipments($csv_data);
-    $this->createRoadstationEval($csv_data);
-    $this->createSeasonalInformation($csv_data);
-    $this->createSeasonalInformationFlag($csv_data);
+    DB::beginTransaction();
+    try{
+      $this->createRoadstation($csv_data);
+      $this->createRoadstationAddress($csv_data);
+      $this->createLocationRoad($csv_data);
+      $this->createRoadstationBusinessHour($csv_data);
+      $this->createRoadstationBusinessStampInformation($csv_data);
+      $this->createRoadstationSightseeing($csv_data);
+      $this->createRoadstationParking($csv_data);
+      $this->createRoadstationContact($csv_data);
+      $this->createRoadstationUrls($csv_data);
+      $this->createRoadstationLabel($csv_data);
+      $this->createAncillaryEquipments($csv_data);
+      $this->createRoadstationEval($csv_data);
+      $this->createSeasonalInformation($csv_data);
+      $this->createSeasonalInformationFlag($csv_data);
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollback();
+      dd($e);
+      return false;
+    }
+    return true;
   }
   public function bulkInsertFacility($csv_data){
-    // dd($csv_data);
-    $this->createFacilityDetail($csv_data);
-    $this->createFacilityPayment($csv_data);
-    $this->createFacilityEvent($csv_data);
-    $this->createRestaurantInformation($csv_data);
-    $this->createBathingInformation($csv_data);
-    $this->createFacilitiesBusinessHours($csv_data);
+    DB::beginTransaction();
+    try{
+      // dd($csv_data);
+      $this->createFacilityDetail($csv_data);
+      $this->createFacilityPayment($csv_data);
+      $this->createFacilityEvent($csv_data);
+      $this->createRestaurantInformation($csv_data);
+      $this->createBathingInformation($csv_data);
+      $this->createFacilitiesBusinessHours($csv_data);
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollback();
+      dd($e);
+      return false;
+    }
+    return true;
   }
   private function createRoadstation($data){
     try{
@@ -67,13 +84,13 @@ class ImportCsvService
         $tmp['registry_year'] = isset($value[20]) ? strval($value[20]) : "";
         $tmp['catch_copy']    = isset($value[21]) ? strval($value[21]) : "";
         $tmp['introduction']  = isset($value[22]) ? strval($value[22]) : "";
-        $arr_roadstation[] = $tmp;
+        // $arr_roadstation[] = $tmp;
+        Roadstation::upsert($tmp,['ZPX_ID']);
       }
-      // dd($arr_roadstation);
-      $arr_roadstation = array_chunk($arr_roadstation,1000);
-      foreach($arr_roadstation as $key => $value){
-        Roadstation::upsert($value,['ZPX_ID']);
-      }
+      // $arr_roadstation = array_chunk($arr_roadstation,1000);
+      // foreach($arr_roadstation as $key => $value){
+      //   Roadstation::upsert($value,['ZPX_ID']);
+      // }
     } catch (Exception $e) {
       throw new Exception("項目数エラー");
     }

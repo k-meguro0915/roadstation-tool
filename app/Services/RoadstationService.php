@@ -51,16 +51,15 @@ class RoadstationService
     return Roadstation::where('CID',$cid)->get();
   }
   public function detail($zpx_id){
-    $ret['roadstation'] = Roadstation::where('ZPX_ID',$zpx_id)->get();
-    $ret['address']     = RoadstationAddress::where('ZPX_ID',$zpx_id)->get();
-    $ret['localroad']   = LocationRoad::where('ZPX_ID',$zpx_id)->get();
-    $ret['event']       = SeasonalInformation::where('ZPX_ID',$zpx_id)->get();
-    $ret['eventFlag']   = SeasonalInformationFlag::where('ZPX_ID',$zpx_id)->get();
-    $ret['basic']       = RoadstationBusinessHour::where('ZPX_ID',$zpx_id)->get();
-    $ret['parking']     = RoadstationParking::where('ZPX_ID',$zpx_id)->get();
-    $ret['stamp']       = RoadstationBusinessStampInformation::where('ZPX_ID',$zpx_id)->get();
-    $ret['urls']        = RoadstationUrls::where('ZPX_ID',$zpx_id)->get();
-    $ret['urls']        = RoadstationUrls::where('ZPX_ID',$zpx_id)->get();
+    $ret['roadstation'] = Roadstation::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['address']     = RoadstationAddress::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['localroad']   = LocationRoad::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['event']       = SeasonalInformation::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['eventFlag']   = SeasonalInformationFlag::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['basic']       = RoadstationBusinessHour::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['parking']     = RoadstationParking::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['stamp']       = RoadstationBusinessStampInformation::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret['urls']        = RoadstationUrls::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
   }
   public function edit($zpx_id){
     $ret = array();
@@ -92,7 +91,7 @@ class RoadstationService
     $ret['urls']          = RoadstationUrls::where('CID',$cid)->get();
     $ret['sightseeing']   = RoadstationSightseeing::where('CID',$cid)->get(['name']);
     $ret['equipments']    = AncillaryEquipments::where('CID',$cid)->get(['equipment_id']);
-    $ret['facilities']    = FacilityDetail::where('ZPX_ID',$zpx_id)->get();
+    $ret['facilities']    = FacilityDetail::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
     $ret['contact']       = RoadstationContact::where('CID',$cid)->get();
     return $ret;
   }
