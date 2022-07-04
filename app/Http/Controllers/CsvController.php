@@ -17,6 +17,7 @@ class CsvController extends Controller
   }
   public function confirm(Request $request){
     $service = new ImportCsvService;
+    $ret = false;
     $type = $request->input('type');
     $upload_file_name = Storage::disk('public')->putFileAs('files', $request->file('file'),'roadstation_basic_info.txt');// ファイル内容取得
     $csv = Storage::disk('local')->get('public/' . $upload_file_name);
@@ -32,14 +33,16 @@ class CsvController extends Controller
     }
     if($type == 0){
       if(count($fileHeader) != 99) return false;
-      $service->bulkInsertRoadstation($users);
+      $ret = $service->bulkInsertRoadstation($users);
     } else {
       if(count($fileHeader) != 49) return false;
-      $service->bulkInsertFacility($users);
+      $ret = $service->bulkInsertFacility($users);
     }
-    $version = new DataVersionService();
-    $version->update();
+    if($ret){
+      $version = new DataVersionService();
+      $version->update();
+    }
     Storage::delete($upload_file_name);
-    return redirect('/');
+    return redirect('/')->with('flash_message','CSVのインポートが完了しました。');;
   }
 }

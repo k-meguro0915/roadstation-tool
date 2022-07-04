@@ -40,7 +40,7 @@ class FacilityController extends Controller
       $version = new DataVersionService();
       $version->update();
     }
-    return redirect('/facilities');
+    return redirect('/facilities')->with('flash_message','登録が完了しました。');;
   }
   public function edit($uid){
     $facility = $this->service->show($uid);
@@ -61,7 +61,7 @@ class FacilityController extends Controller
       $version = new DataVersionService();
       $version->update();
     }
-    return redirect('/facilities');
+    return redirect('/facilities')->with('flash_message','更新が完了しました。');
   }
   public function delete($uid){
     $ret = $this->service->changeDeleteFlg($uid,'1');
@@ -70,7 +70,7 @@ class FacilityController extends Controller
       $version = new DataVersionService();
       $version->update();
     }
-    return redirect('/facilities');
+    return redirect('/facilities')->with('flash_message','削除が完了しました。');
   }
   public function restore($uid){
     $is_deleted_roadstation = $this->service->checkRoadStation($uid);
@@ -83,6 +83,6 @@ class FacilityController extends Controller
       $version = new DataVersionService();
       $version->update();
     }
-    return redirect('/facilities');
+    return redirect('/facilities')->with('flash_message','削除済みの付帯施設を復元しました。');;
   }
 }

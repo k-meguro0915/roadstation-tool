@@ -50,7 +50,7 @@ class RoadStationController extends Controller
       $version = new DataVersionService();
       $version->update();
     }
-    return redirect('/');
+    return redirect('/')->with('flash_message','登録が完了しました。');
   }
   // 道の駅編集
   public function edit($zpx_id){
@@ -78,7 +78,7 @@ class RoadStationController extends Controller
   // 道の駅編集：更新
   public function update(Request $request){
     $this->service->update($request);
-    return redirect('/');
+    return redirect('/')->with('flash_message','更新が完了しました。');
   }
   // 道の駅削除
   public function delete($zpx_id){
@@ -86,14 +86,14 @@ class RoadStationController extends Controller
     $this->service->changeDeleteFlg($zpx_id,1);
     $version = new DataVersionService();
     $version->update();
-    return redirect('/');
+    return redirect('/')->with('flash_message','削除が完了しました。');
   }
   public function restore($zpx_id){
     Log::Debug($zpx_id);
     $this->service->changeDeleteFlg($zpx_id,0);
     $version = new DataVersionService();
     $version->update();
-    return redirect('/show_deleted_roadstation');
+    return redirect('/')->with('flash_message','削除済みの道の駅を復元しました。');
   }
   public function show($zpx_id){
     $equipments = MstEquipments::orderBy('id','asc')->get();
