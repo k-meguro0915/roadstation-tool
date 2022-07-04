@@ -1,5 +1,5 @@
 @extends('template')
-@section('title','道の駅情報更新')
+@section('title','道の駅情報詳細')
 @section('description','ディスクリプション')
 
 @section('content')
@@ -288,7 +288,9 @@
         </table>
       @endif
       <h3>施設情報</h3>
-      @if(!empty($roadstation["facilities"]))
+      @if(empty($roadstation["facilities"]))
+        <p>施設情報はありません。</p>
+      @else
         <table class="table">
           @foreach($roadstation["facilities"] as $key => $value)
             @php
