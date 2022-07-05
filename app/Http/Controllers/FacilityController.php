@@ -21,12 +21,15 @@ class FacilityController extends Controller
   public function show($uid){
     $facility = $this->service->show($uid);
     $restaurant = !empty($facility['restaurant'][0]) ? $facility['restaurant'][0]->getAttributes() : NULL;
+    $payment = !empty($facility['payment'][0]) ? $facility['payment'][0]->getAttributes() : NULL;
+    $businesshours = !empty($facility['businesshours']) ? $facility['businesshours'] : NULL;
+    $events = !empty($facility['events'][0]) ? $facility['events'][0] : NULL;
     return view('showFacility',[
       'facility' => $facility['facility'][0]->getAttributes(),
-      'payment' => $facility['payment'][0]->getAttributes(),
+      'payment' => $payment,
       'restaurant' => $restaurant,
-      'businesshours' => $facility['businesshours'],
-      'events' => $facility['event'],
+      'businesshours' => $businesshours,
+      'events' => $events,
     ]);
   }
   public function create(){
@@ -45,12 +48,15 @@ class FacilityController extends Controller
   public function edit($uid){
     $facility = $this->service->show($uid);
     $restaurant = !empty($facility['restaurant'][0]) ? $facility['restaurant'][0]->getAttributes() : NULL;
+    $payment = !empty($facility['payment'][0]) ? $facility['payment'][0]->getAttributes() : NULL;
+    $businesshours = !empty($facility['businesshours'][0]) ? $facility['businesshours'] : NULL;
+    $events = !empty($facility['events'][0]) ? $facility['events'][0] : NULL;
     return view('editFacility',[
       'facility' => $facility['facility'][0]->getAttributes(),
-      'payment' => $facility['payment'][0]->getAttributes(),
+      'payment' => $payment,
       'restaurant' => $restaurant,
-      'businesshours' => $facility['businesshours'],
-      'events' => $facility['event'],
+      'businesshours' => $businesshours,
+      'events' => $events,
     ]);
   }
   public function update(Request $request){
