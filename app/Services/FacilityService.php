@@ -33,8 +33,26 @@ class FacilityService
   }
   // 道の駅取得（ID指定）
   // リストの時点で削除フラグは非表示なので、こちらではフラグ検索はしない
-  public function where($cid){
-    return FacilityDetail::where('CID',$cid)->get();
+  public function where($zpx_id){
+    $ret = [];
+    $facilities = FacilityDetail::where([['ZPX_ID','=',$zpx_id],['is_delete','=','0']])->get();
+    $ret[] = $facilities->map(function ($value){
+      $facility = [];
+      $uid = $value->getAttributes()['UID'];
+      $facility['basic']          = $value->getAttributes();
+      $facility['payment']        = FacilityPayment::where([['UID','=',$uid],['is_delete','=','0']])->get();
+      $facility['payment']        = !$facility['payment']->isEmpty() ? $facility['payment'][0]->getAttributes() : '';
+      $facility['event']          = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get('contents');
+      $facility['event']          = !$facility['event']->isEmpty() ? $facility['event'][0]->getAttributes() : '';
+      $facility['businesshours']  = FacilitiesBusinessHours::where([['UID','=',$uid],['is_delete','=','0']])->get();
+      $facility['businesshours']  = !$facility['businesshours']->isEmpty() ? $facility['businesshours'][0]->getAttributes() : '';
+      $facility['restaurant']     = RestaurantInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
+      $facility['restaurant']     = !$facility['restaurant']->isEmpty() ? $facility['restaurant'][0]->getAttributes() : '';
+      $facility['bathing']        = BathingInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
+      $facility['bathing']        = !$facility['bathing']->isEmpty() ? $facility['bathing'][0]->getAttributes() : '';      // dd($facility);
+      return $facility;
+    });
+    return $ret[0];
   }
   public function edit($cid){
   }

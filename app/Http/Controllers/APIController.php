@@ -104,8 +104,9 @@ class APIController extends Controller
     public function getFacilities(Request $request){
       try{
         if($this->checkAPIKey($request)){
+          $zpx_id = $request->ZPX_ID;
           $service = new FacilityService;
-          $ret = $service->all();
+          $ret = $service->where($zpx_id);
           $result = [
             'result' => $ret
           ];
@@ -126,6 +127,7 @@ class APIController extends Controller
         ];
         return $this->resConversionJson($result, $e->getCode());
       }
+      // dd($result);
       return $this->resConversionJson($result);
     }
     public function getFacilityDetail(Request $request){
