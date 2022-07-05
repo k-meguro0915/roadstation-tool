@@ -11,6 +11,10 @@
       <div class="flash_message alert alert-primary text-center" role="alert">
         {{ session('flash_message') }}
       </div>
+    @elseif(session('error_message'))
+      <div class="error_message alert alert-danger text-center" role="alert">
+        {{ session('error_message') }}
+      </div>
     @endif
 		<div class="container">
 			@yield('content')

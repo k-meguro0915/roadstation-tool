@@ -1,26 +1,26 @@
 <div class="form-group">
   <label for="formGroupExampleInput">ZPX_ID</label>
-  <input require pattern="^\d-\d$" value="@if(isset($facility['ZPX_ID'])){{ $facility['ZPX_ID'] }}@endif" name="facility[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
+  <input required pattern="^\d-\d$" value="@if(isset($facility['ZPX_ID'])){{ $facility['ZPX_ID'] }}@endif" name="facility[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">施設-カテゴリーコード</label>
-  <input require pattern="^\d{4}$" value="@if(isset($facility['facility_category_code'])){{ $facility['facility_category_code'] }}@endif" name="facility[facility_category_code]" type="text" class="form-control" id="formGroupExampleInput" readonly placeholder="施設コード + カテゴリーコード(自動入力)">
+  <input required pattern="^\d{4}$" value="@if(isset($facility['facility_category_code'])){{ $facility['facility_category_code'] }}@endif" name="facility[facility_category_code]" type="text" class="form-control" id="formGroupExampleInput" readonly placeholder="施設コード + カテゴリーコード(自動入力)">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">施設コード</label>
-  <input require pattern="^\d{2}$" value="@if(isset($facility['facility_code'])){{ $facility['facility_code'] }}@endif" name="facility[facility_code]" type="text" class="form-control" id="formGroupExampleInput" placeholder="数字2桁（1桁の場合0埋め）">
+  <input required pattern="^\d{2}$" value="@if(isset($facility['facility_code'])){{ $facility['facility_code'] }}@endif" name="facility[facility_code]" type="text" class="form-control" id="formGroupExampleInput" placeholder="数字2桁（1桁の場合0埋め）">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">カテゴリーコード</label>
-  <input require pattern="^\d{2}$" value="@if(isset($facility['category_code'])){{ $facility['category_code'] }}@endif" name="facility[category_code]" type="text" class="form-control" id="formGroupExampleInput" placeholder="数字2桁（1桁の場合0埋め）">
+  <input required pattern="^\d{2}$" value="@if(isset($facility['category_code'])){{ $facility['category_code'] }}@endif" name="facility[category_code]" type="text" class="form-control" id="formGroupExampleInput" placeholder="数字2桁（1桁の場合0埋め）">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">UID</label>
-  <input require value="@if(isset($facility['UID'])){{ $facility['UID'] }}@endif" name="facility[UID]" type="number" class="form-control" id="formGroupExampleInput" placeholder="数値を入力">
+  <input required value="@if(isset($facility['UID'])){{ $facility['UID'] }}@endif" name="facility[UID]" type="number" class="form-control" id="formGroupExampleInput" placeholder="数値を入力">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">名称</label>
-  <input require value="@if(isset($facility['name'])){{ $facility['name'] }}@endif" name="facility[name]" type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+  <input required value="@if(isset($facility['name'])){{ $facility['name'] }}@endif" name="facility[name]" type="text" class="form-control" id="formGroupExampleInput" placeholder="">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">名称（ｶﾅ）</label>

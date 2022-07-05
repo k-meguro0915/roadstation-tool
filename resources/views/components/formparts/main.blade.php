@@ -1,15 +1,15 @@
 <!-- 道の駅 -->
 <div class="form-group">
   <label for="formGroupExampleInput">ZPX_ID</label>
-  <input pattern="^\d-\d$" value="@if(isset($roadstation['ZPX_ID'])){{ $roadstation['ZPX_ID'] }}@endif" name="roadstation[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
+  <input required pattern="^\d-\d$" value="@if(isset($roadstation['ZPX_ID'])){{ $roadstation['ZPX_ID'] }}@endif" name="roadstation[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">CID</label>
-  <input pattern="^\d{2}-\d{1}-\d{3}$" value="@if(isset($roadstation['CID'])){{ $roadstation['CID'] }}@endif" name="roadstation[CID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="01-0-001">
+  <input required pattern="^\d{2}-\d{1}-\d{3}$" value="@if(isset($roadstation['CID'])){{ $roadstation['CID'] }}@endif" name="roadstation[CID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="01-0-001">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">道の駅 名称</label>
-  <input value="@if(isset($roadstation['name'])){{ $roadstation['name'] }}@endif" name="roadstation[name]" type="text" class="form-control" id="formGroupExampleInput" placeholder="道の駅">
+  <input required value="@if(isset($roadstation['name'])){{ $roadstation['name'] }}@endif" name="roadstation[name]" type="text" class="form-control" id="formGroupExampleInput" placeholder="道の駅">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput2">フリガナ</label>
@@ -21,7 +21,8 @@
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput2">紹介文</label>
-  <textarea name="roadstation[introduction]" class="form-control" id="exampleFormControlTextarea1" rows="3">@if(isset($roadstation['introduction'])){{ $roadstation['introduction'] }}@endif
+  <textarea name="roadstation[introduction]" class="form-control" id="exampleFormControlTextarea1" rows="3">
+    @if(isset($roadstation['introduction'])){{ $roadstation['introduction'] }}@endif
   </textarea>
 </div>
 <div class="form-group">

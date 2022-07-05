@@ -10,7 +10,7 @@
 			<!-- 共通フォーム呼び出し -->
 			@include('components.form')
 			<div class="form-group">
-				<button type="button" onclick="submit()" class="btn btn-primary mb-2 mt-2">確定</button>
+				<button type="submit" class="btn btn-primary mb-2 mt-2">確定</button>
 			</div>
 		</form>
 	</div>

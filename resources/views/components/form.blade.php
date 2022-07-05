@@ -33,10 +33,10 @@
           name="service[]"
           onchange="changeIsService({{$value->id}})"
           value="{{$value->id}}"
-          @if(array_search($value->id,array_column($roadstation_equipments, 'equipment_id')) !== false))) checked @endif
+          @if(!empty($roadstation_equipments) && array_search($value->id,array_column($roadstation_equipments, 'equipment_id')) !== false))) checked @endif
         >
         <span
-          id="service-btn-<?php print($value->id)?>" class="btn @if(array_search($value->id,array_column($roadstation_equipments, 'equipment_id')) !== false)btn-primary @else btn-secondary @endif"
+          id="service-btn-<?php print($value->id)?>" class="btn @if(!empty($roadstation_equipments) && array_search($value->id,array_column($roadstation_equipments, 'equipment_id')) !== false)btn-primary @else btn-secondary @endif"
           for="customCheck<?php print($value->id)?>"
         >
           <?php print($value->name); ?>
