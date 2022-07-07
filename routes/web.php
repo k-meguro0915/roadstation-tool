@@ -6,6 +6,7 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ListRoadStationController;
 use App\Http\Controllers\ListFacilityController;
 use App\Http\Controllers\CsvController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,8 @@ use App\Http\Controllers\CsvController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[ListRoadStationController::class,'index']);
+Route::get('/',[HomeController::class,'index']);
+Route::get('/roadstations',[ListRoadStationController::class,'index']);
 Route::get('/facilities',[ListFacilityController::class,'index']);
 Route::get('/facilities/show/{UID}',[FacilityController::class,'show']);
 Route::get('/facilities/edit/{UID}',[FacilityController::class,'edit']);
@@ -39,3 +41,4 @@ Route::get('/restore_roadstation/{ZPX_ID}',[RoadStationController::class,'restor
 
 Route::get('/import_csv', [CsvController::class,'index']);
 Route::post('/import_csv/confirm',[CsvController::class,'confirm']);
+Auth::routes();

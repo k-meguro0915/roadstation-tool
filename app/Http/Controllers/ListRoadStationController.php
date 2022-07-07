@@ -21,7 +21,7 @@ class ListRoadStationController extends Controller
         $road_station = $this->service->get();
         $count = $this->service->count();
         // dd($road_station[0]->getAttributes());
-        return view('welcome',[
+        return view('listRoadstation',[
             'road_station' => $road_station,
             'count' => $count
         ]);
