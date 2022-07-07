@@ -172,6 +172,7 @@ class RoadstationService
       if(!empty($event)){
         $tmp = [];
         foreach($event as $key => $item){
+          if(empty($item['title']))continue;
           $tmp[] = [
             'CID'=>$cid,
             'id'=>$key,
@@ -418,6 +419,11 @@ class RoadstationService
     $arr['TouristFacility'] = implode('、',$arr_sight);
     $ret[] = $arr;
     return $ret;
+  }
+  public function apiEvents($zpx_id){
+    $cid = Roadstation::where('ZPX_ID',$zpx_id)->get('CID');
+    $arr_events = SeasonalInformation::where('CID',$cid[0]->CID)->get();
+    return $arr_events;
   }
   // API用の鋳型
   private function initApiArray(){

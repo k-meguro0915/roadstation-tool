@@ -101,6 +101,34 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
+    public function getRoadstationEvent(Request $request){
+      try{
+        if($this->checkAPIKey($request)){
+          $zpx_id = $request->ZPX_ID;
+          $service = new RoadstationService;
+          $ret = $service->apiEvents($zpx_id);
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
+      } catch(\Exception $e){
+        $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$e->getMessage()]
+            ],
+        ];
+        return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
+    }
     public function getFacilities(Request $request){
       try{
         if($this->checkAPIKey($request)){

@@ -58,6 +58,7 @@ class RoadStationController extends Controller
     $facilities = MstEquipments::orderBy('id','asc')->get();
     $roadstation = $this->service->show($zpx_id);
     // dd($roadstation['equipments']->toArray());
+    $business = !empty($roadstation['business_hour'][0]) ? $roadstation['business_hour'][0]->getAttributes() : '';
     return view('editRoadStation',[
       'equipments' => $equipments,
       'facilities' => $facilities,
@@ -67,7 +68,7 @@ class RoadStationController extends Controller
       'localroad' => $roadstation['localroad'],
       'event' => $roadstation['event'],
       'eventFlag' => $roadstation['eventFlag'],
-      'business_hour' => $roadstation['business_hour'][0]->getAttributes(),
+      'business_hour' => $business,
       'parking' => $roadstation['parking'],
       'urls' => $roadstation['urls'],
       'sightseeing' => $roadstation['sightseeing'],
