@@ -12,6 +12,11 @@ use App\Services\ImportCsvService;
 use App\Services\DataVersionService;
 class CsvController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+
   public function index(){
     return view('importCsv');
   }
