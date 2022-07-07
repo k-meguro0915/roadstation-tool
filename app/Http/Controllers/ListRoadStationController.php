@@ -14,6 +14,7 @@ class ListRoadStationController extends Controller
     private $service;
     public function __construct(RoadstationService $service)
     {
+      $this->middleware('auth');
         $this->service = $service;
     }
 

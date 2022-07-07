@@ -20,6 +20,7 @@ class RoadStationController extends Controller
   private $roadstation;
   public function __construct(RoadstationService $service)
   {
+    $this->middleware('auth');
     $this->service = $service;
   }
   // 道の駅作成：入力画面

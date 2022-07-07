@@ -10,6 +10,10 @@ use App\Services\RoadstationService;
 use App\Services\DataVersionService;
 class APIController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     protected $error_msg_key = 'wrong or nothing API Key';
     //
     private function checkAPIKey($request){

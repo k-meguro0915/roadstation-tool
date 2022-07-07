@@ -17,6 +17,7 @@ class ListFacilityController extends Controller
   private $roadstation;
   public function __construct(FacilityService $service)
   {
+    $this->middleware('auth');
     $this->service = $service;
   }
   public function index(){
