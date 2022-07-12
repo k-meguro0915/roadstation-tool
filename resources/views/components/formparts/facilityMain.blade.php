@@ -1,6 +1,6 @@
 <div class="form-group">
   <label for="formGroupExampleInput">ZPX_ID</label>
-  <input required pattern="^\d-\d$" value="@if(isset($facility['ZPX_ID'])){{ $facility['ZPX_ID'] }}@endif" name="facility[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
+  <input required pattern="^\d{1,2}-\d{1,3}$" value="@if(isset($facility['ZPX_ID'])){{ $facility['ZPX_ID'] }}@endif" name="facility[ZPX_ID]" type="text" class="form-control" id="formGroupExampleInput" placeholder="1-1">
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">施設-カテゴリーコード</label>
