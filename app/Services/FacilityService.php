@@ -45,7 +45,7 @@ class FacilityService
       $facility['event']          = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get('contents');
       $facility['event']          = !$facility['event']->isEmpty() ? $facility['event'][0]->getAttributes() : '';
       $facility['businesshours']  = FacilitiesBusinessHours::where([['UID','=',$uid],['is_delete','=','0']])->get();
-      $facility['businesshours']  = !$facility['businesshours']->isEmpty() ? $facility['businesshours'][0]->getAttributes() : [];
+      $facility['businesshours']  = !$facility['businesshours']->isEmpty() ? $facility['businesshours'][0]->getAttributes() : $this->emptyBusinessHours();
       $facility['restaurant']     = RestaurantInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
       $facility['restaurant']     = !$facility['restaurant']->isEmpty() ? $facility['restaurant'][0]->getAttributes() : '';
       $facility['bathing']        = BathingInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
@@ -161,5 +161,18 @@ class FacilityService
       return false;
     }
     return true;
+  }
+  private function emptyBusinessHours(){
+    return [
+      "ZPX_ID" => "",
+      "UID" => "",
+      "id" => "",
+      "start_time" => "",
+      "end_time" => "",
+      "time_supplement" => "",
+      "is_delete" => "0",
+      "created_at" => "",
+      "updated_at" => ""
+    ];
   }
 }
