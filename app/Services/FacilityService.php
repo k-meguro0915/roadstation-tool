@@ -45,7 +45,7 @@ class FacilityService
       $facility['event']          = FacilityEvent::where([['UID','=',$uid],['is_delete','=','0']])->get('contents');
       $facility['event']          = !$facility['event']->isEmpty() ? $facility['event'][0]->getAttributes() : '';
       $facility['businesshours']  = FacilitiesBusinessHours::where([['UID','=',$uid],['is_delete','=','0']])->get();
-      $facility['businesshours']  = !$facility['businesshours']->isEmpty() ? $facility['businesshours'][0]->getAttributes() : '';
+      $facility['businesshours']  = !$facility['businesshours']->isEmpty() ? $facility['businesshours'][0]->getAttributes() : [];
       $facility['restaurant']     = RestaurantInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
       $facility['restaurant']     = !$facility['restaurant']->isEmpty() ? $facility['restaurant'][0]->getAttributes() : '';
       $facility['bathing']        = BathingInformation::where([['UID','=',$uid],['is_delete','=','0']])->get();
