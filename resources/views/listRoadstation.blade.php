@@ -5,6 +5,15 @@
 @section('content')
 	<div class="my-5">
     <h2 class="mb-5">道の駅一覧</h2>
+    <div id="search-form" class="mb-5">
+      <form action="" method="GET">
+        <label for="formControlInput" class="form-label">道の駅名</label>
+        <input name="roadstation_name" type="text" class="form-control" id="formControlInput" placeholder="あいまい検索">
+        <div class="text-right">
+          <button type="submit" class="btn btn-success my-2 ">検索</button>
+        </div>
+      </form>
+    </div>
     <div class="mb-5">
       <p class="d-inline">総数{{$count}}件</p>
       <a class="d-inline float-right" href="/show_deleted_roadstation"><button class="btn btn-primary">削除された道の駅</button></a>

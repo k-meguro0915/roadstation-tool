@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Routing\UrlGenerator; //  SSL
+// use Illuminate\Routing\UrlGenerator; //  SSL
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,9 +22,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url) //  引数
+    public function boot() //  引数
     {
         Paginator::useBootstrap();
-        $url->forceScheme('https'); //  SSL対応
+        // $url->forceScheme('https'); //  SSL対応
     }
 }

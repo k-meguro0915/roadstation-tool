@@ -20,8 +20,12 @@ class ListFacilityController extends Controller
     $this->middleware('auth');
     $this->service = $service;
   }
-  public function index(){
-    $facilities = $this->service->get();
+  public function index(Request $request){
+    if(!empty($request->facility_name)){
+      $facilities = $this->service->search($request->facility_name);
+    }else{
+      $facilities = $this->service->get();
+    }
     $count = $this->service->count();
     // dd($facilities);
     return view('listFacilities',[

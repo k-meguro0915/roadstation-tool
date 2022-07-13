@@ -39,6 +39,9 @@ class RoadstationService
     // Userのmodelクラスのインスタンスを生成
     return Roadstation::where('is_delete',0)->orderBy('CID','asc')->paginate(15);
   }
+  public function search($name){
+    return Roadstation::where([['name','like',"%$name%"],['is_delete',0]])->orderBy('CID','asc')->paginate(15);
+  }
   public function deletedList(){
     return Roadstation::where('is_delete',1)->orderBy('CID','asc')->paginate(15);
   }

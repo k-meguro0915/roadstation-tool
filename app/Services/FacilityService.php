@@ -24,6 +24,9 @@ class FacilityService
     // Userのmodelクラスのインスタンスを生成
     return FacilityDetail::where('is_delete','0')->orderBy('ZPX_ID','asc')->paginate(15);
   }
+  public function search($name){
+    return FacilityDetail::where([['name','like',"%$name%"],['is_delete','0']])->orderBy('ZPX_ID','asc')->paginate(15);
+  }
   public function deletedList(){
     return FacilityDetail::where('is_delete',1)->orderBy('ZPX_ID','asc')->paginate(15);
   }
