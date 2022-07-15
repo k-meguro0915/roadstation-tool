@@ -37,13 +37,19 @@ class RoadstationService
   // 道の駅取得（ページネーション付き）
   public function get(){
     // Userのmodelクラスのインスタンスを生成
-    return Roadstation::where('is_delete',0)->orderBy('CID','asc')->paginate(15);
+    return Roadstation::where('roadstations.is_delete',0)
+                        ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
+                        ->orderBy('roadstations.CID','asc')->paginate(15);
   }
-  public function search($name){
-    return Roadstation::where([['name','like',"%$name%"],['is_delete',0]])->orderBy('CID','asc')->paginate(15);
+  public function search($name,$prefecture){
+    return Roadstation::where([['name','like',"%$name%"],['roadstations.is_delete',0]])
+                        ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
+                        ->orderBy('roadstations.CID','asc')->paginate(15);
   }
   public function deletedList(){
-    return Roadstation::where('is_delete',1)->orderBy('CID','asc')->paginate(15);
+    return Roadstation::where('roadstations.is_delete',1)
+                      ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
+                      ->orderBy('roadstations.CID','asc')->paginate(15);
   }
   public function count(){
     // Userのmodelクラスのインスタンスを生成

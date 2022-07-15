@@ -24,6 +24,7 @@
 				<tr>
 					<th scope="col">ZPX_ID</th>
 					<th scope="col">道の駅 名称</th>
+					<th scope="col">都道府県</th>
 					<th scope="col">登録年</th>
 					<th scope="col">編集/削除</th>
 				</tr>
@@ -36,6 +37,7 @@
 				<tr>
 					<td>{{ $item['ZPX_ID'] }}</td>
 					<td><a href="/show_roadstation/{{$item['ZPX_ID']}}">{{ $item['name'] }}</a></td>
+					<td>{{ $item['prefecture'] }}</td>
 					<td>{{ $item['registry_year'] }}</td>
 					<td>
 						<a href="/edit_roadstation/{{$item['ZPX_ID']}}" class="btn btn-primary">編集</a>
