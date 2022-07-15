@@ -22,10 +22,10 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">紐づけZPX_ID</th>
 					<th scope="col">UID</th>
 					<th scope="col">カテゴリID</th>
 					<th scope="col">施設名称</th>
+					<th scope="col">紐づけされる道の駅</th>
 					<th scope="col">編集/削除</th>
 				</tr>
 			</thead>
@@ -35,10 +35,10 @@
           $item = $value->getAttributes();
         @endphp
 				<tr>
-					<td>{{ $item['ZPX_ID'] }}</td>
 					<td>{{ $item['UID'] }}</td>
 					<td>{{ $item['category_code'] }}</td>
 					<td><a href="/facilities/show/{{$item['UID']}}">{{ $item['name'] }}</a></td>
+					<td><a href="/show_roadstation/{{$item['ZPX_ID']}}">{{ $item['roadstation'] }}</a></td>
 					<td>
 						<a href="/facilities/edit/{{$item['UID']}}" class="btn btn-primary">編集</a>
 						<a href="/facilities/delete/{{$item['UID']}}" class="btn btn-danger">削除</a>

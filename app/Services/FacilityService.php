@@ -22,13 +22,22 @@ class FacilityService
   // 道の駅を全取得（ページネーション）
   public function get(){
     // Userのmodelクラスのインスタンスを生成
-    return FacilityDetail::where('is_delete','0')->orderBy('ZPX_ID','asc')->paginate(15);
+    return FacilityDetail::where('facility_details.is_delete','0')
+                          ->join('roadstations', 'roadstations.ZPX_ID', '=', 'facility_details.ZPX_ID')
+                          ->select('facility_details.*', 'roadstations.name as roadstation')
+                          ->orderBy('facility_details.ZPX_ID','asc')->paginate(15);
   }
   public function search($name){
-    return FacilityDetail::where([['name','like',"%$name%"],['is_delete','0']])->orderBy('ZPX_ID','asc')->paginate(15);
+    return FacilityDetail::where([['name','like',"%$name%"],['facility_details.is_delete','0']])
+                          ->join('roadstations', 'roadstations.ZPX_ID', '=', 'facility_details.ZPX_ID')
+                          ->select('facility_details.*', 'roadstations.name as roadstation')
+                          ->orderBy('facility_details.ZPX_ID','asc')->paginate(15);
   }
   public function deletedList(){
-    return FacilityDetail::where('is_delete',1)->orderBy('ZPX_ID','asc')->paginate(15);
+    return FacilityDetail::where('facility_details.is_delete',1)
+                          ->join('roadstations', 'roadstations.ZPX_ID', '=', 'facility_details.ZPX_ID')
+                          ->select('facility_details.*', 'roadstations.name as roadstation')
+                          ->orderBy('facility_details.ZPX_ID','asc')->paginate(15);
   }
   public function count(){
     // Userのmodelクラスのインスタンスを生成
