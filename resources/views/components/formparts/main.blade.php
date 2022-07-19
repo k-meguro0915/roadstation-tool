@@ -21,9 +21,7 @@
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput2">紹介文</label>
-  <textarea name="roadstation[introduction]" class="form-control" id="exampleFormControlTextarea1" rows="3">
-    @if(isset($roadstation['introduction'])){{ $roadstation['introduction'] }}@endif
-  </textarea>
+  <textarea name="roadstation[introduction]" class="form-control" id="exampleFormControlTextarea1" rows="3">@if(isset($roadstation['introduction'])){{$roadstation['introduction']}}@endif</textarea>
 </div>
 <div class="form-group">
   <label for="formGroupExampleInput">お土産</label>
