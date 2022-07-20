@@ -51,14 +51,14 @@
   </div>
   <div class="form-check form-check-inline">
     <input 
-      @if(isset($eventFlag[0]->is_closed) && $eventFlag[0]->is_closed == 1){{ checked }} @endif
+      @if(isset($eventFlag[0]->is_closed) && $eventFlag[0]->is_closed == 1){{ 'checked' }} @endif
       name="eventFlag[is_closed]" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1"
     >
     <label class="form-check-label" for="inlineCheckbox1">休業</label>
   </div>
   <div class="form-check form-check-inline">
     <input 
-      @if(isset($eventFlag[0]->is_shutdown) && $eventFlag[0]->is_shutdown == 1){{ checked }} @endif
+      @if(isset($eventFlag[0]->is_shutdown) && $eventFlag[0]->is_shutdown == 1){{ 'checked' }} @endif
       name="eventFlag[is_shutdown]" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="1"
     >
     <label class="form-check-label" for="inlineCheckbox2">閉鎖</label>
