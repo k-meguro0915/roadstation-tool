@@ -28,7 +28,7 @@ class FacilityService
                           ->orderBy('facility_details.ZPX_ID','asc')->paginate(15);
   }
   public function search($name){
-    return FacilityDetail::where([['name','like',"%$name%"],['facility_details.is_delete','0']])
+    return FacilityDetail::where([['facility_details.name','like',"%$name%"],['facility_details.is_delete','0']])
                           ->join('roadstations', 'roadstations.ZPX_ID', '=', 'facility_details.ZPX_ID')
                           ->select('facility_details.*', 'roadstations.name as roadstation')
                           ->orderBy('facility_details.ZPX_ID','asc')->paginate(15);
