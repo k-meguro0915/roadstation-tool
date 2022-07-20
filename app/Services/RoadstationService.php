@@ -41,7 +41,7 @@ class RoadstationService
                         ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
                         ->orderBy('roadstations.CID','asc')->paginate(15);
   }
-  public function search($name,$prefecture){
+  public function search($name){
     return Roadstation::where([['name','like',"%$name%"],['roadstations.is_delete',0]])
                         ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
                         ->orderBy('roadstations.CID','asc')->paginate(15);
