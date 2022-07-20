@@ -550,7 +550,7 @@ class ImportCsvService
           $tmp['ZPX_ID']           = isset($value[0]) ? strval($value[0]) : "";
           $tmp['UID']              = isset($value[4]) ? strval($value[4]) : "";
           $tmp['id']               = isset($value[36]) ? 0 : "";
-          $tmp['information']      = isset($value[36]) ? strval($value[36]) : "";
+          $tmp['contents']      = isset($value[36]) ? strval($value[36]) : "";
           $arr[] = $tmp;
         }
         if(!empty($value[37])){
@@ -558,7 +558,7 @@ class ImportCsvService
           $tmp['ZPX_ID']           = isset($value[0]) ? strval($value[0]) : "";
           $tmp['UID']              = isset($value[4]) ? strval($value[4]) : "";
           $tmp['id']               = isset($value[37]) ? 1 : "";
-          $tmp['information']      = isset($value[37]) ? strval($value[37]) : "";
+          $tmp['contents']      = isset($value[37]) ? strval($value[37]) : "";
           $arr[] = $tmp;
         }
         if(!empty($value[38])){
@@ -566,7 +566,7 @@ class ImportCsvService
           $tmp['ZPX_ID']           = isset($value[0]) ? strval($value[0]) : "";
           $tmp['UID']              = isset($value[4]) ? strval($value[4]) : "";
           $tmp['id']               = isset($value[38]) ? 2 : "";
-          $tmp['information']      = isset($value[38]) ? strval($value[38]) : "";
+          $tmp['contents']      = isset($value[38]) ? strval($value[38]) : "";
           $arr[] = $tmp;
         }
       }
