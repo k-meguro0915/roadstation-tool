@@ -37,11 +37,11 @@
             >
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">住所（都道府県）</label>
-            <select id="formGroupExampleInput" type="text" class="form-control" name="address[prefecture]">                          
+            <label for="prefecture">住所（都道府県）</label>
+            <select id="prefecture" type="text" class="form-control" name="address[prefecture]" onchange="setArea()">                          
               @foreach(config('prefecture') as $key => $score)
                 <option 
-                  value="{{ $score }}" 
+                  value="{{ $score }}"
                   @if(isset($address[0]->prefecture) && $address[0]->prefecture == $score)
                     selected
                   @endif

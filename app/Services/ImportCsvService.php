@@ -81,9 +81,9 @@ class ImportCsvService
         $tmp['name']          = isset($value[2]) ? strval($value[2]) : "";
         $tmp['name_furi']     = isset($value[3]) ? strval($value[3]) : "";
         $tmp['thumbnail']     = isset($value[4]) ? strval($value[4]) : "";
-        $tmp['registry_year'] = isset($value[20]) ? strval($value[20]) : "";
-        $tmp['catch_copy']    = isset($value[21]) ? strval($value[21]) : "";
-        $tmp['introduction']  = isset($value[22]) ? strval($value[22]) : "";
+        $tmp['registry_year'] = isset($value[21]) ? strval($value[21]) : "";
+        $tmp['catch_copy']    = isset($value[22]) ? strval($value[22]) : "";
+        $tmp['introduction']  = isset($value[23]) ? strval($value[23]) : "";
         // $arr_roadstation[] = $tmp;
         Roadstation::upsert($tmp,['ZPX_ID']);
       }
@@ -106,11 +106,12 @@ class ImportCsvService
         $tmp['prefecture']      = isset($value[6]) ? strval($value[6]) : "";
         $tmp['local_address']   = isset($value[7]) ? strval($value[7]) : "";
         $tmp['prefecture_code'] = isset($value[8]) ? strval($value[8]) : "";
-        $tmp['latitude_x']      = isset($value[9]) ? strval($value[9]) : "";
-        $tmp['latitude_y']      = isset($value[10]) ? strval($value[10]) : "";
-        $tmp['map_code']        = isset($value[11]) ? strval($value[11]) : "";
-        $tmp['tel']             = isset($value[12]) ? strval($value[12]) : "";
-        $tmp['elebation']       = isset($value[13]) ? strval($value[13]) : "";
+        $tmp['area']            = isset($value[9]) ? strval($value[9]) : "";
+        $tmp['latitude_x']      = isset($value[10]) ? strval($value[10]) : "";
+        $tmp['latitude_y']      = isset($value[11]) ? strval($value[11]) : "";
+        $tmp['map_code']        = isset($value[12]) ? strval($value[12]) : "";
+        $tmp['tel']             = isset($value[13]) ? strval($value[13]) : "";
+        $tmp['elebation']       = isset($value[14]) ? strval($value[14]) : "";
         $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);
@@ -125,23 +126,23 @@ class ImportCsvService
     try{
       $arr = [];
       foreach($data as $key => $value){
-        if(empty($value[14])) continue;
+        if(empty($value[15])) continue;
         $tmp = [];
         $tmp['CID']                = isset($value[1]) ? strval($value[1]) : "";
         $tmp['location_road_id']   = 1;
-        $tmp['location_road_type'] = isset($value[14]) ? strval($value[14]) : "";
-        $tmp['road_number']        = isset($value[15]) ? strval($value[15]) : "";
-        $tmp['road_name']          = isset($value[16]) ? strval($value[16]) : "";
+        $tmp['location_road_type'] = isset($value[15]) ? strval($value[15]) : "";
+        $tmp['road_number']        = isset($value[16]) ? strval($value[16]) : "";
+        $tmp['road_name']          = isset($value[17]) ? strval($value[17]) : "";
         $arr[] = $tmp;
       }
       foreach($data as $key => $value){
-        if(empty($value[17])) continue;
+        if(empty($value[18])) continue;
         $tmp = [];
         $tmp['CID']                = isset($value[1]) ? strval($value[1]) : "";
         $tmp['location_road_id']   = 2;
-        $tmp['location_road_type'] = isset($value[17]) ? strval($value[17]) : "";
-        $tmp['road_number']        = isset($value[18]) ? strval($value[18]) : "";
-        $tmp['road_name']          = isset($value[19]) ? strval($value[19]) : "";
+        $tmp['location_road_type'] = isset($value[18]) ? strval($value[18]) : "";
+        $tmp['road_number']        = isset($value[19]) ? strval($value[19]) : "";
+        $tmp['road_name']          = isset($value[20]) ? strval($value[20]) : "";
         $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);
@@ -156,18 +157,18 @@ class ImportCsvService
     try{
       $arr = [];
       foreach($data as $key => $value){
-        if(empty($value[23])) continue;
+        if(empty($value[24])) continue;
         $tmp = [];
         $tmp['CID']                   = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['start_time']            = isset($value[23]) ? strval($value[23]) : "";
-        $tmp['end_time']              = isset($value[24]) ? strval($value[24]) : "";
-        $tmp['time_supplement1']      = isset($value[25]) ? strval($value[25]) : "";
-        $tmp['time_supplement2']      = isset($value[26]) ? strval($value[26]) : "";
-        $tmp['regular_holiday']       = isset($value[28]) ? strval($value[28]) : "";
-        $tmp['holiday_supplement1']   = isset($value[29]) ? strval($value[29]) : "";
-        $tmp['holiday_supplement2']   = isset($value[30]) ? strval($value[30]) : "";
-        $tmp['holiday_sightseeing_code']   = isset($value[31]) ? strval($value[31]) : "";
-        $tmp['time_sightseeing_code']   = isset($value[27]) ? strval($value[27]) : "";
+        $tmp['start_time']            = isset($value[24]) ? strval($value[24]) : "";
+        $tmp['end_time']              = isset($value[25]) ? strval($value[25]) : "";
+        $tmp['time_supplement1']      = isset($value[26]) ? strval($value[26]) : "";
+        $tmp['time_supplement2']      = isset($value[27]) ? strval($value[27]) : "";
+        $tmp['regular_holiday']       = isset($value[29]) ? strval($value[29]) : "";
+        $tmp['holiday_supplement1']   = isset($value[30]) ? strval($value[30]) : "";
+        $tmp['holiday_supplement2']   = isset($value[31]) ? strval($value[31]) : "";
+        $tmp['holiday_sightseeing_code']   = isset($value[32]) ? strval($value[32]) : "";
+        $tmp['time_sightseeing_code']   = isset($value[28]) ? strval($value[28]) : "";
         $arr[] = $tmp;
       }
       // dd($arr);
@@ -184,17 +185,17 @@ class ImportCsvService
       $arr = [];
       foreach($data as $key => $value){
         if(
-          empty($value[32]) &&
           empty($value[33]) &&
           empty($value[34]) &&
           empty($value[35]) &&
-          empty($value[36])
+          empty($value[36]) &&
+          empty($value[37])
         ) continue;
-        if(!empty($value[32])) $arr[] = ['id' => 0,'CID' => strval($value[1]),'name' => strval($value[32])];
-        if(!empty($value[33])) $arr[] = ['id' => 1,'CID' => strval($value[1]),'name' => strval($value[33])];
-        if(!empty($value[34])) $arr[] = ['id' => 2,'CID' => strval($value[1]),'name' => strval($value[34])];
-        if(!empty($value[35])) $arr[] = ['id' => 3,'CID' => strval($value[1]),'name' => strval($value[35])];
-        if(!empty($value[36])) $arr[] = ['id' => 4,'CID' => strval($value[1]),'name' => strval($value[36])];
+        if(!empty($value[33])) $arr[] = ['id' => 0,'CID' => strval($value[1]),'name' => strval($value[33])];
+        if(!empty($value[34])) $arr[] = ['id' => 1,'CID' => strval($value[1]),'name' => strval($value[34])];
+        if(!empty($value[35])) $arr[] = ['id' => 2,'CID' => strval($value[1]),'name' => strval($value[35])];
+        if(!empty($value[36])) $arr[] = ['id' => 3,'CID' => strval($value[1]),'name' => strval($value[36])];
+        if(!empty($value[37])) $arr[] = ['id' => 4,'CID' => strval($value[1]),'name' => strval($value[37])];
       }
       $arr = array_chunk($arr,1000);
       foreach($arr as $key => $value){
@@ -208,12 +209,12 @@ class ImportCsvService
     try{
       $arr = [];
       foreach($data as $key => $value){
-        if(empty($value[23])) continue;
+        if(empty($value[47])) continue;
         $tmp = [];
         $tmp['CID']                         = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['learge_parking_number']       = isset($value[45]) ? strval($value[45]) : "";
-        $tmp['middle_parking_number']       = isset($value[46]) ? strval($value[46]) : "";
-        $tmp['disabilities_parking_number'] = isset($value[47]) ? strval($value[47]) : "";
+        $tmp['learge_parking_number']       = isset($value[46]) ? strval($value[46]) : "";
+        $tmp['middle_parking_number']       = isset($value[47]) ? strval($value[47]) : "";
+        $tmp['disabilities_parking_number'] = isset($value[48]) ? strval($value[48]) : "";
         $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);
@@ -231,12 +232,12 @@ class ImportCsvService
         if(empty($value[1])){continue;}
         $tmp = [];
         $tmp['CID']       = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['web']       = isset($value[37]) ? strval($value[37]) : "";
-        $tmp['twitter']   = isset($value[38]) ? strval($value[38]) : "";
-        $tmp['facebook']  = isset($value[39]) ? strval($value[39]) : "";
-        $tmp['instagram'] = isset($value[40]) ? strval($value[40]) : "";
-        $tmp['line']      = isset($value[41]) ? strval($value[41]) : "";
-        $tmp['other']     = isset($value[42]) ? strval($value[42]) : "";
+        $tmp['web']       = isset($value[38]) ? strval($value[38]) : "";
+        $tmp['twitter']   = isset($value[39]) ? strval($value[39]) : "";
+        $tmp['facebook']  = isset($value[40]) ? strval($value[40]) : "";
+        $tmp['instagram'] = isset($value[41]) ? strval($value[41]) : "";
+        $tmp['line']      = isset($value[42]) ? strval($value[42]) : "";
+        $tmp['other']     = isset($value[43]) ? strval($value[43]) : "";
         $arr[] = $tmp;
       }
       // dd($arr_roadstation);
@@ -253,13 +254,13 @@ class ImportCsvService
       $arr = [];
       foreach($data as $key => $value){
         if(empty($value[0])) continue;
-        if(isset($value[83]) && $value[83] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 0];
-        if(isset($value[84]) && $value[84] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 1];
-        if(isset($value[85]) && $value[85] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 2];
-        if(isset($value[86]) && $value[86] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 3];
-        if(isset($value[87]) && $value[87] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 4];
-        if(isset($value[88]) && $value[88] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 5];
-        if(isset($value[89]) && $value[89] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 6];
+        if(isset($value[84]) && $value[84] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 0];
+        if(isset($value[85]) && $value[85] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 1];
+        if(isset($value[86]) && $value[86] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 2];
+        if(isset($value[87]) && $value[87] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 3];
+        if(isset($value[88]) && $value[88] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 4];
+        if(isset($value[89]) && $value[89] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 5];
+        if(isset($value[90]) && $value[90] == 1)$arr[] = ['CID' => strval($value[1]),'label_id' => 6];
       }
       $arr = array_chunk($arr,1000);
       foreach($arr as $key => $value){
@@ -274,14 +275,14 @@ class ImportCsvService
       $arr = [];
       foreach($data as $key => $value){
         if(empty($value[0])) continue;
-        if(isset($value[48]) && $value[48] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 0];
-        if(isset($value[49]) && $value[49] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 1];
-        if(isset($value[50]) && $value[50] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 2];
-        if(isset($value[51]) && $value[51] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 3];
-        if(isset($value[52]) && $value[52] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 4];
-        if(isset($value[53]) && $value[53] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 5];
-        if(isset($value[54]) && $value[54] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 6];
-        if(isset($value[55]) && $value[55] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 7];
+        if(isset($value[49]) && $value[49] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 0];
+        if(isset($value[50]) && $value[50] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 1];
+        if(isset($value[51]) && $value[51] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 2];
+        if(isset($value[52]) && $value[52] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 3];
+        if(isset($value[53]) && $value[53] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 4];
+        if(isset($value[54]) && $value[54] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 5];
+        if(isset($value[55]) && $value[55] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 6];
+        if(isset($value[56]) && $value[56] == 1)$arr[] = ['CID' => strval($value[1]),'facility_id' => 7];
       }
       // dd($arr);
       $arr = array_chunk($arr,1000);
@@ -297,15 +298,15 @@ class ImportCsvService
       $arr = [];
       foreach($data as $key => $value){
         if(empty($value[0])) continue;
-        if(isset($value[56]) && $value[56] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 0];
-        if(isset($value[57]) && $value[57] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 1];
-        if(isset($value[58]) && $value[58] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 2];
-        if(isset($value[59]) && $value[59] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 3];
-        if(isset($value[60]) && $value[60] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 4];
-        if(isset($value[61]) && $value[61] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 5];
-        if(isset($value[62]) && $value[62] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 6];
-        if(isset($value[63]) && $value[63] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 7];
-        if(isset($value[64]) && $value[64] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 8];
+        if(isset($value[57]) && $value[57] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 0];
+        if(isset($value[58]) && $value[58] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 1];
+        if(isset($value[59]) && $value[59] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 2];
+        if(isset($value[60]) && $value[60] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 3];
+        if(isset($value[61]) && $value[61] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 4];
+        if(isset($value[62]) && $value[62] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 5];
+        if(isset($value[63]) && $value[63] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 6];
+        if(isset($value[64]) && $value[64] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 7];
+        if(isset($value[65]) && $value[65] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 8];
       }
       // dd($arr);
       $arr = array_chunk($arr,1000);
@@ -320,21 +321,21 @@ class ImportCsvService
     try{
       $arr = [];
       foreach($data as $key => $value){
-        if(empty($value[65])) continue;
+        if(empty($value[66])) continue;
         $tmp = [];
         $tmp['CID']                     = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['id']                      = isset($value[65]) ? 1 : "";
-        $tmp['installation_location']   = isset($value[65]) ? strval($value[65]) : "";
-        $tmp['start_time']              = isset($value[66]) ? strval($value[66]) : "";
+        $tmp['id']                      = isset($value[66]) ? 1 : "";
+        $tmp['installation_location']   = isset($value[66]) ? strval($value[66]) : "";
+        $tmp['start_time']              = isset($value[67]) ? strval($value[67]) : "";
         $arr[] = $tmp;
       }
       foreach($data as $key => $value){
-        if(empty($value[67])) continue;
+        if(empty($value[66])) continue;
         $tmp = [];
         $tmp['CID']                     = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['id']                      = isset($value[67]) ? 2 : "";
-        $tmp['installation_location']   = isset($value[67]) ? strval($value[67]) : "";
-        $tmp['start_time']              = isset($value[68]) ? strval($value[68]) : "";
+        $tmp['id']                      = isset($value[66]) ? 2 : "";
+        $tmp['installation_location']   = isset($value[68]) ? strval($value[68]) : "";
+        $tmp['start_time']              = isset($value[69]) ? strval($value[69]) : "";
         $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);
@@ -349,17 +350,17 @@ class ImportCsvService
     try{
       $arr = [];
       foreach($data as $key => $value){
-        if(empty($value[91])) continue;
+        if(empty($value[92])) continue;
         $tmp = [];
         $tmp['CID']               = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['contact_address']   = isset($value[91]) ? strval($value[91]) : "";
-        $tmp['postal_code']         = isset($value[92]) ? strval($value[92]) : "";
-        $tmp['address']           = isset($value[93]) ? strval($value[93]) : "";
-        $tmp['tel']               = isset($value[94]) ? strval($value[94]) : "";
-        $tmp['fax']               = isset($value[95]) ? strval($value[95]) : "";
-        $tmp['manager']           = isset($value[96]) ? strval($value[96]) : "";
-        $tmp['mail']              = isset($value[97]) ? strval($value[97]) : "";
-        $tmp['remarks']           = isset($value[98]) ? strval($value[98]) : "";
+        $tmp['contact_address']   = isset($value[92]) ? strval($value[92]) : "";
+        $tmp['postal_code']       = isset($value[93]) ? strval($value[93]) : "";
+        $tmp['address']           = isset($value[94]) ? strval($value[94]) : "";
+        $tmp['tel']               = isset($value[95]) ? strval($value[95]) : "";
+        $tmp['fax']               = isset($value[96]) ? strval($value[96]) : "";
+        $tmp['manager']           = isset($value[97]) ? strval($value[97]) : "";
+        $tmp['mail']              = isset($value[98]) ? strval($value[98]) : "";
+        $tmp['remarks']           = isset($value[99]) ? strval($value[99]) : "";
         $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);
@@ -377,8 +378,8 @@ class ImportCsvService
         if(empty($value[1])) continue;
         $tmp = [];
         $tmp['CID']           = isset($value[1]) ? strval($value[1]) : "";
-        $tmp['eval_index']    = isset($value[43]) ? strval($value[43]) : "";
-        $tmp['eval_comment']  = isset($value[44]) ? strval($value[44]) : "";
+        $tmp['eval_index']    = isset($value[44]) ? strval($value[44]) : "";
+        $tmp['eval_comment']  = isset($value[45]) ? strval($value[45]) : "";
         $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);
@@ -394,31 +395,31 @@ class ImportCsvService
       $arr = [];
       foreach($data as $key => $value){
         if(empty($value[1])) continue;
-        if(!empty($value[69])){
+        if(!empty($value[70])){
           $tmp = [];
           $tmp['CID']         = isset($value[1]) ? strval($value[1]) : "";
-          $tmp['title']       = isset($value[69]) ? strval($value[69]) : "";
-          $tmp['content']     = isset($value[70]) ? strval($value[70]) : "";
-          $tmp['start_time']  = isset($value[71]) ? strval($value[71]) : "";
-          $tmp['end_time']    = isset($value[72]) ? strval($value[72]) : "";
+          $tmp['title']       = isset($value[70]) ? strval($value[69]) : "";
+          $tmp['content']     = isset($value[71]) ? strval($value[71]) : "";
+          $tmp['start_time']  = isset($value[72]) ? strval($value[72]) : "";
+          $tmp['end_time']    = isset($value[73]) ? strval($value[73]) : "";
           $arr[] = $tmp;
         }
-        if(!empty($value[73])){
+        if(!empty($value[74])){
           $tmp = [];
           $tmp['CID']         = isset($value[1]) ? strval($value[1]) : "";
-          $tmp['title']       = isset($value[73]) ? strval($value[73]) : "";
-          $tmp['content']     = isset($value[74]) ? strval($value[74]) : "";
-          $tmp['start_time']  = isset($value[75]) ? strval($value[75]) : "";
-          $tmp['end_time']    = isset($value[76]) ? strval($value[76]) : "";
+          $tmp['title']       = isset($value[74]) ? strval($value[74]) : "";
+          $tmp['content']     = isset($value[75]) ? strval($value[75]) : "";
+          $tmp['start_time']  = isset($value[76]) ? strval($value[76]) : "";
+          $tmp['end_time']    = isset($value[77]) ? strval($value[77]) : "";
           $arr[] = $tmp;
         }
-        if(!empty($value[77])){
+        if(!empty($value[78])){
           $tmp = [];
           $tmp['CID']         = isset($value[1]) ? strval($value[1]) : "";
-          $tmp['title']       = isset($value[77]) ? strval($value[77]) : "";
-          $tmp['content']     = isset($value[78]) ? strval($value[78]) : "";
-          $tmp['start_time']  = isset($value[79]) ? strval($value[79]) : "";
-          $tmp['end_time']    = isset($value[80]) ? strval($value[80]) : "";
+          $tmp['title']       = isset($value[78]) ? strval($value[78]) : "";
+          $tmp['content']     = isset($value[79]) ? strval($value[79]) : "";
+          $tmp['start_time']  = isset($value[80]) ? strval($value[80]) : "";
+          $tmp['end_time']    = isset($value[81]) ? strval($value[81]) : "";
           $arr[] = $tmp;
         }
       }
@@ -437,8 +438,8 @@ class ImportCsvService
         if(empty($value[1])) continue;
           $tmp = [];
           $tmp['CID']           = isset($value[1]) ? strval($value[1]) : "";
-          $tmp['is_closed']     = isset($value[81]) ? strval($value[81]) : "";
-          $tmp['is_shutdown']   = isset($value[82]) ? strval($value[82]) : "";
+          $tmp['is_closed']     = isset($value[82]) ? strval($value[82]) : "";
+          $tmp['is_shutdown']   = isset($value[83]) ? strval($value[83]) : "";
           $arr[] = $tmp;
       }
       $arr = array_chunk($arr,1000);

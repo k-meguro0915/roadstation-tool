@@ -237,7 +237,7 @@ class RoadstationService
       $arr["PrefectureID"]        = $prefecture_id;
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
-      $arr["Area"]              = $address['prefecture'];
+      $arr["Area"]              = $address['area'];
       $arr["Latitude"]          = $address['latitude_y'];
       $arr["Longitude"]         = $address['latitude_x'];
       $arr["MapCode"]           = $address['map_code'];
@@ -325,7 +325,7 @@ class RoadstationService
       $arr["PrefectureID"]        = $prefecture_id;
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
-      $arr["Area"]              = $address['prefecture'];
+      $arr["Area"]              = $address['area'];
       $arr["Latitude"]          = $address['latitude_y'];
       $arr["Longitude"]         = $address['latitude_x'];
       $arr["MapCode"]           = $address['map_code'];
@@ -357,7 +357,7 @@ class RoadstationService
     $arr["PrefectureID"]        = $prefecture_id;
     $address = RoadstationAddress::where('CID',$value['CID'])->get();
     $address = $address[0];
-    $arr["Area"]                = $address['prefecture'];
+    $arr["Area"]                = $address['area'];
     $arr["Latitude"]            = $address['latitude_y'];
     $arr["Longitude"]           = $address['latitude_x'];
     $arr["MapCode"]             = $address['map_code'];

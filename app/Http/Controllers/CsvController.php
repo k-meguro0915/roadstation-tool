@@ -37,7 +37,7 @@ class CsvController extends Controller
       throw new Exception("項目数エラー");
     }
     if($type == 0){
-      if(count($fileHeader) != 99) return false;
+      if(count($fileHeader) != 100) return false;
       $ret = $service->bulkInsertRoadstation($users);
     } else {
       if(count($fileHeader) != 49) return false;

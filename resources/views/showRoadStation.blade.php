@@ -45,6 +45,10 @@
       @if(!empty($roadstation["address"][0]))
         <table class="table">
           <tr>
+            <th class="col-md-3">エリア</th>
+            <th class="col-md-7">{{ $roadstation["address"][0]->area }}</th>
+          </tr>
+          <tr>
             <th class="col-md-3">郵便番号</th>
             <th class="col-md-7">{{ $roadstation["address"][0]->postal_code }}</th>
           </tr>
