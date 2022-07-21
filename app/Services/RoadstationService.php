@@ -394,9 +394,11 @@ class RoadstationService
     $cnt_majorway = 1;
     foreach($local_road as $key => $item){
       $load_head = "";
+      $road = "";
       if($item['location_road_type'] == '1'){
         $load_head = "国道";
         // $arr["NationalHighWay".$cnt_highway] = $load_head + $item['road_number'] + "号";
+        $road = $load_head . $item['road_number'] . "号";
       } else if($item['location_road_type'] == '2'){
         switch($arr["PrefectureNameCD"]){
           case "東京都" : $load_head = "都道"; break;
@@ -405,8 +407,11 @@ class RoadstationService
           case "大阪府" : $load_head = "府道"; break;
           default: $load_head = "県道";
         }
+        $road = $load_head . $item['road_number'] . "号";
+      } else if($item['location_road_type'] == '3'){
+        $road = $item['road_name'];
       }
-      $arr["NationalHighWay".$cnt_highway] = $load_head . $item['road_number'] . "号";
+      $arr["NationalHighWay".$cnt_highway] = $road;
       $arr["MajorPrefecturalRoad".$cnt_highway] = "";
       $cnt_highway++;
     }
