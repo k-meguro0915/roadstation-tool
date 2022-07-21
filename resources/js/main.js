@@ -26,6 +26,9 @@ window.clickChangeButtonState = function(id,name){
     deleteFacilitiesCard(id);
   }
 }
+window.setArea = function(){
+  let selectBox = document.getElementById('prefecture');
+}
 window.addFacilities = function(id,name){
   showFacilitiesCard(id,name);
 }
