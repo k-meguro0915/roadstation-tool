@@ -5,7 +5,8 @@
  */
 
 require('./bootstrap');
-
+require('./main');
+require('./castPrefectureArea');
 window.Vue = require('vue').default;
 
 /**

@@ -16,3 +16,8 @@
 		</form>
 	</div>
 @endsection
+@section('script')
+<script type="text/javascript">
+  initPrefectureSelect();
+</script>
+@endsection

@@ -28,6 +28,21 @@ window.clickChangeButtonState = function(id,name){
 }
 window.setArea = function(){
   let selectBox = document.getElementById('prefecture');
+  let selectedNumber = selectBox.selectedIndex;
+  let prefecture = selectBox.options[selectedNumber].text;
+  let area = castPrefectureArea(prefecture);
+  document.getElementById('prefecture-area').value = area;
+}
+window.initPrefectureSelect = function(){
+  let selectBox = document.getElementById('prefecture');
+  let area = document.getElementById('prefecture-area').value;
+  if(selectBox.value == "長野県" && area == "中部"){
+    selectBox.options[20].selected = true;
+  } else if(selectBox.value == "長野県" && area == "関東"){
+    selectBox.options[21].selected = true;
+  } else {
+    return true;
+  }
 }
 window.addFacilities = function(id,name){
   showFacilitiesCard(id,name);
