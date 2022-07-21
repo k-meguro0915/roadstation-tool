@@ -31,7 +31,7 @@
   <div class="form-group">
     <select name="localroad[0][location_road_type]" class="custom-select">
       <label for="formGroupExampleInput2">立地道路種別1</label>
-      <option>道路種別を選択</option>
+      <option value="">道路種別を選択</option>
       <option 
         @if(isset($localroad[0]) && $localroad[0]->location_road_type == "1") selected @endif 
         value="1"
@@ -57,7 +57,7 @@
   <div class="form-group">
     <select name="localroad[1][location_road_type]" class="custom-select">
       <label for="formGroupExampleInput2">立地道路種別2</label>
-      <option>道路種別を選択</option>
+      <option value="">道路種別を選択</option>
       <option 
         @if(!empty($localroad[1]) && $localroad[1]->location_road_type == "1") selected @endif 
         value="1"

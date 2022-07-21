@@ -168,6 +168,7 @@ class RoadstationService
       if(!empty($local_road)){
         $tmp = [];
         foreach($local_road as $key => $item){
+          if($item['location_road_type'] == "")continue;
           $tmp[] = [
             'CID'=>$cid,
             'location_road_id'=>$key,

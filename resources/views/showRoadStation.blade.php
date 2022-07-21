@@ -162,6 +162,28 @@
           </tr>
         </table>
       @endif
+      @if(!empty($roadstation["localroad"][1]))
+        <table class="table">
+          <tr>
+            <th class="col-md-3">立地道路種別</th>
+            <th class="col-md-7">
+              {{$roadstation["localroad"][1]->location_road_type}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">道路番号</th>
+            <th class="col-md-7">
+              {{$roadstation["localroad"][1]->road_number}}
+            </th>
+          </tr>
+          <tr>
+            <th class="col-md-3">道路名称（その他のみ）</th>
+            <th class="col-md-7">
+              {{$roadstation["localroad"][1]->road_name}}
+            </th>
+          </tr>
+        </table>
+      @endif
       <h3>駐車場情報</h3>
       @if(!empty($roadstation["parking"][0]))
         <table class="table">
