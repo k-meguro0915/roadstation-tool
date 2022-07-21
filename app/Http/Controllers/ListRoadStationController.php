@@ -19,16 +19,14 @@ class ListRoadStationController extends Controller
     }
 
     public function index(Request $request){
-        if(!empty($request->roadstation_name)){
-          $road_station = $this->service->search($request->roadstation_name);
-        }else{
-          $road_station = $this->service->get();
-        }
-        $count = $this->service->count();
+        $roadstation_name = !empty($request->roadstation_name) ? $request->roadstation_name : "";
+        $prefecture = !empty($request->prefecture) ? $request->prefecture : "";
+        $road_station = $this->service->search($roadstation_name,$prefecture);
+        // $count = $road_station->count();
         // dd($road_station[0]->getAttributes());
         return view('listRoadstation',[
-            'road_station' => $road_station,
-            'count' => $count
+            'road_station' => $road_station['result'],
+            'count' => $road_station['count']
         ]);
     }
     public function showDeleted(){

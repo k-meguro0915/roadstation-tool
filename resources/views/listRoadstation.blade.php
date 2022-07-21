@@ -9,11 +9,23 @@
       <form action="" method="GET">
         <label for="formControlInput" class="form-label">道の駅名</label>
         <input name="roadstation_name" type="text" class="form-control" id="formControlInput" placeholder="あいまい検索">
+        <div class="form-group mt-3">
+          <label for="prefecture">住所（都道府県）</label>
+          <select id="prefecture" type="text" class="form-control" name="prefecture">                          
+            @foreach(config('prefecture_default') as $key => $score)
+              <option 
+                value="{{ $score }}"
+              >
+                {{ $key }}
+              </option>
+            @endforeach
+          </select>
+        </div>
         <div class="text-right">
           <button type="submit" class="btn btn-success my-2 ">検索</button>
         </div>
       </form>
-    </div>
+    </div> 
     <div class="mb-5">
       <p class="d-inline">総数{{$count}}件</p>
       <a class="d-inline float-right" href="/show_deleted_roadstation"><button class="btn btn-primary">削除された道の駅</button></a>

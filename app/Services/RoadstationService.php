@@ -41,10 +41,25 @@ class RoadstationService
                         ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
                         ->orderBy('roadstations.CID','asc')->paginate(15);
   }
-  public function search($name){
-    return Roadstation::where([['name','like',"%$name%"],['roadstations.is_delete',0]])
-                        ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
-                        ->orderBy('roadstations.CID','asc')->paginate(15);
+  public function search($name,$prefecture = ""){
+    $query = Roadstation::query();
+    if(!empty($name)) {
+      $query->where('name','like',"%$name%");
+    }
+    if(!empty($prefecture) && $prefecture != '未選択') {
+      $query->where('roadstation_addresses.prefecture','=',$prefecture);
+    }
+    $query->where('roadstations.is_delete',0);
+    $query->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID');
+    $query->orderBy('roadstations.CID','asc');
+
+    $ret['result'] = $query->paginate(15);
+    $ret['count'] = $query->count();
+
+    return $ret;
+    // return Roadstation::where([['name','like',"%$name%"],['roadstation_addresses.prefecture','=',$prefecture],['roadstations.is_delete',0]])
+    //                     ->join('roadstation_addresses', 'roadstations.CID', '=', 'roadstation_addresses.CID')
+    //                     ->orderBy('roadstations.CID','asc')->paginate(15);
   }
   public function deletedList(){
     return Roadstation::where('roadstations.is_delete',1)
