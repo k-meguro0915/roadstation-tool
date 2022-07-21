@@ -37,6 +37,17 @@
             >
           </div>
           <div class="form-group">
+            <label for="formGroupExampleInput">エリア</label>
+            <input 
+              value="@if(isset($address[0]->area)){{ $address[0]->area }}@endif"
+              name="address[area]"
+              type="text"
+              class="form-control"
+              id="prefecture-area"
+              readonly
+            >
+          </div>
+          <div class="form-group">
             <label for="prefecture">住所（都道府県）</label>
             <select id="prefecture" type="text" class="form-control" name="address[prefecture]" onchange="setArea()">                          
               @foreach(config('prefecture') as $key => $score)
@@ -46,7 +57,7 @@
                     selected
                   @endif
                 >
-                  {{ $score }}
+                  {{ $key }}
                 </option>
               @endforeach
             </select>
