@@ -393,13 +393,22 @@ class RoadstationService
     $cnt_highway  = 1;
     $cnt_majorway = 1;
     foreach($local_road as $key => $item){
+      $load_head = "";
       if($item['location_road_type'] == '1'){
-        $arr["NationalHighWay".$cnt_highway] = $item['road_number'];
-        $cnt_highway++;
+        $load_head = "国道";
+        // $arr["NationalHighWay".$cnt_highway] = $load_head + $item['road_number'] + "号";
       } else if($item['location_road_type'] == '2'){
-        $arr["MajorPrefecturalRoad".$cnt_majorway] = $item['road_number'];
-        $cnt_majorway++;
+        switch($arr["PrefectureNameCD"]){
+          case "東京都" : $load_head = "都道"; break;
+          case "北海道" : $load_head = "道道"; break;
+          case "京都府" : $load_head = "府道"; break;
+          case "大阪府" : $load_head = "府道"; break;
+          default: $load_head = "県道";
+        }
       }
+      $arr["NationalHighWay".$cnt_highway] = $load_head . $item['road_number'] . "号";
+      $arr["MajorPrefecturalRoad".$cnt_highway] = "";
+      $cnt_highway++;
     }
     $equipment      = AncillaryEquipments::where('CID',$value['CID'])->get();
     $arr_equipment  = [];
