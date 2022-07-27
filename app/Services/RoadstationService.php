@@ -192,6 +192,7 @@ class RoadstationService
             'road_name'=>$item['road_name'],
           ];
         }
+        LocationRoad::where('CID',$cid)->delete();
         $this->createRelationTable(new LocationRoad() , $tmp);
       }
       if(!empty($event)){
@@ -275,7 +276,7 @@ class RoadstationService
         $arr["ParkingLotNormalNumber"]  = $parking['middle_parking_number'];
       }
       $business_hour = RoadstationBusinessHour::where('CID',$value['CID'])->get();
-      if(!empty($business_hour[0])){
+      if(!empty($business_hour[0]) && !empty($business_hour[0]['start_time']) && !empty($business_hour[0]['end_time'])){
         $business_hour = $business_hour[0];
         $arr["BusinessHours"]             = $business_hour['start_time'] . '～' . $business_hour['end_time'];
         $arr["BusinessHoursInformation"]  = $business_hour['time_sightseeing_code'];
