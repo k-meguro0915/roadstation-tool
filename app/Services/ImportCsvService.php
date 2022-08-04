@@ -299,7 +299,7 @@ class ImportCsvService
       $cid = "";
       foreach($data as $key => $value){
         if(empty($value[0])) continue;
-        $cid = $value[1];
+        $cid = strval($value[1]);
         if(isset($value[58]) && $value[58] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 0];
         if(isset($value[59]) && $value[59] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 1];
         if(isset($value[60]) && $value[60] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 2];
