@@ -28,8 +28,8 @@ use Illuminate\Support\Facades\DB;
 class ImportCsvService
 {
   public function bulkInsertRoadstation($csv_data){
-    DB::beginTransaction();
     try{
+      DB::beginTransaction();
       $this->createRoadstation($csv_data);
       $this->createRoadstationAddress($csv_data);
       $this->createLocationRoad($csv_data);
@@ -311,7 +311,7 @@ class ImportCsvService
         if(isset($value[57]) && $value[57] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 8];
       }
       // dd($arr);
-      AncillaryEquipments::where('CID',$cid)->delete();
+      AncillaryEquipments::query()->delete();
       $arr = array_chunk($arr,1000);
       foreach($arr as $key => $value){
         AncillaryEquipments::upsert($value,['CID','equipment_id']);
