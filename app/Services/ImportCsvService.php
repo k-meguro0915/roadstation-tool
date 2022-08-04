@@ -296,10 +296,9 @@ class ImportCsvService
   private function createAncillaryEquipments($data){
     try{
       $arr = [];
-      $cid = "";
       foreach($data as $key => $value){
         if(empty($value[0])) continue;
-        $cid = strval($value[1]);
+        AncillaryEquipments::where('CID',strval($value[1]))->delete();
         if(isset($value[58]) && $value[58] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 0];
         if(isset($value[59]) && $value[59] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 1];
         if(isset($value[60]) && $value[60] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 2];
@@ -310,8 +309,6 @@ class ImportCsvService
         if(isset($value[65]) && $value[65] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 7];
         if(isset($value[57]) && $value[57] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 8];
       }
-      // dd($arr);
-      AncillaryEquipments::query()->delete();
       $arr = array_chunk($arr,1000);
       foreach($arr as $key => $value){
         AncillaryEquipments::upsert($value,['CID','equipment_id']);
