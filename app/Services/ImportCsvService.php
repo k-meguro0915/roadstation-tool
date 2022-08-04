@@ -300,14 +300,14 @@ class ImportCsvService
       foreach($data as $key => $value){
         if(empty($value[0])) continue;
         $cid = $value[1];
-        if(isset($value[65]) && $value[65] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 0];
-        if(isset($value[58]) && $value[58] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 1];
-        if(isset($value[59]) && $value[59] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 2];
-        if(isset($value[60]) && $value[60] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 3];
-        if(isset($value[61]) && $value[61] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 4];
-        if(isset($value[62]) && $value[62] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 5];
-        if(isset($value[63]) && $value[63] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 6];
-        if(isset($value[64]) && $value[64] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 7];
+        if(isset($value[58]) && $value[58] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 0];
+        if(isset($value[59]) && $value[59] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 1];
+        if(isset($value[60]) && $value[60] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 2];
+        if(isset($value[61]) && $value[61] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 3];
+        if(isset($value[62]) && $value[62] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 4];
+        if(isset($value[63]) && $value[63] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 5];
+        if(isset($value[64]) && $value[64] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 6];
+        if(isset($value[65]) && $value[65] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 7];
         if(isset($value[57]) && $value[57] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 8];
       }
       // dd($arr);
