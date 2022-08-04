@@ -309,6 +309,7 @@ class ImportCsvService
         if(isset($value[65]) && $value[65] == 1)$arr[] = ['CID' => strval($value[1]),'equipment_id' => 8];
       }
       // dd($arr);
+      AncillaryEquipments::where('CID',$value[1])->delete();
       $arr = array_chunk($arr,1000);
       foreach($arr as $key => $value){
         AncillaryEquipments::upsert($value,['CID','equipment_id']);
