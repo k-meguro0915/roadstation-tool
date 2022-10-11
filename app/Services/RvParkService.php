@@ -23,8 +23,8 @@ class RvParkService
       $arr['url']                   = $value['url'];
       $arr['latitude']              = $value['latitude'];
       $arr['longitude']             = $value['longitude'];
+      $ret[] = $arr;
     }
-    $ret = $arr;
     return  $ret;
   }
   private function initApiArray(){
