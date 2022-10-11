@@ -25,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(UrlGenerator $url) //  引数
     {
         Paginator::useBootstrap();
-        $url->forceScheme('https'); //  SSL対応
+        // $url->forceScheme('https'); //  SSL対応
     }
 }

@@ -24,4 +24,5 @@ Route::get('get_roadstation_detail/{ZPX_ID}',[APIController::class,'getRoadstati
 Route::get('get_roadstation_event/{ZPX_ID}',[APIController::class,'getRoadstationEvent']);
 Route::get('get_facilities/{ZPX_ID}',[APIController::class,'getFacilities']);
 Route::get('get_facility_detail',[APIController::class,'getFacilityDetail']);
+Route::get('get_rv_parks',[APIController::class,'getRvParks']);
 Route::get('get_database_version',[APIController::class,'getDatabaseVersion']);

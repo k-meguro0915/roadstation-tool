@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\FacilityService;
 use App\Services\RoadstationService;
 use App\Services\DataVersionService;
+use App\Services\RvParkService;
 class APIController extends Controller
 {
     protected $error_msg_key = 'wrong or nothing API Key';
@@ -162,6 +163,33 @@ class APIController extends Controller
       try{
         if($this->checkAPIKey($request)){
           $service = new RoadstationService;
+          $ret = $service->detail($uid);
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
+      } catch(\Exception $e){
+        $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$e->getMessage()]
+            ],
+        ];
+        return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
+    }
+    public function getRvParks(Request $request){
+      try{
+        if($this->checkAPIKey($request)){
+          $service = new RvParkService;
           $ret = $service->detail($uid);
           $result = [
             'result' => $ret
