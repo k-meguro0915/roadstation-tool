@@ -190,7 +190,7 @@ class APIController extends Controller
       try{
         if($this->checkAPIKey($request)){
           $service = new RvParkService;
-          $ret = $service->detail($uid);
+          $ret = $service->get();
           $result = [
             'result' => $ret
           ];
