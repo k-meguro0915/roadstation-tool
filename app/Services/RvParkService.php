@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class RvParkService
 {
   public function get(){
-    $ret = RvPark::all()->getAttributes();
+    return RvPark::orderBy('SID','asc')->get();
     return  $ret;
   }
 }
