@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class RvParkService
 {
   public function get(){
-    $ret = RvPark::get()[0]->getAttributes();
+    $ret = RvPark::all()[0]->getAttributes();
     return  $ret;
   }
 }
