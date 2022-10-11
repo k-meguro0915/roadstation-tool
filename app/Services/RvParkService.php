@@ -27,7 +27,7 @@ class RvParkService
     $ret = $arr;
     return  $ret;
   }
-  private function init(){
+  private function initApiArray(){
     $ret = [
       'SID' => '',
       'legacy_id' => '',
