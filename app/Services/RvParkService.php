@@ -34,7 +34,7 @@ class RvParkService
     foreach($rv as $key => $item){
       // $arr = $this->initApiArray(); //道の駅単位の初期化
       $value = $item->getAttributes();
-      $arr['ZPX_ID'] = $value['ZPX_ID'];
+      $arr = $value['ZPX_ID'];
       $ret[] = $arr;
     }
     return  $ret;
