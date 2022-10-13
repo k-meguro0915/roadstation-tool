@@ -30,7 +30,7 @@ class RvParkService
   }
   public function getTargetRoadstation(){
     $ret = [];
-    $rv = RvRoadstation::all()->get();
+    $rv = RvRoadstation::orderBy('ZPX_ID','asc')->get();
     foreach($rv as $key => $item){
       // $arr = $this->initApiArray(); //道の駅単位の初期化
       $value = $item->getAttributes();
