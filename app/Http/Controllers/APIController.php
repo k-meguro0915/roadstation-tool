@@ -213,7 +213,7 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
-    public function getRvRoadstation(){
+    public function getRvRoadstation(Request $request){
       try{
         if($this->checkAPIKey($request)){
           $service = new RvParkService;
