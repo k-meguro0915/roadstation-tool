@@ -3,6 +3,7 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Log;
 use App\Models\RvPark;
+use App\Models\RvRoadstation;
 use Illuminate\Http\Request;
 
 class RvParkService
