@@ -213,6 +213,33 @@ class APIController extends Controller
       }
       return $this->resConversionJson($result);
     }
+    public function getRvRoadstation(){
+      try{
+        if($this->checkAPIKey($request)){
+          $service = new RvParkService;
+          $ret = $service->getTargetRoadstation();
+          $result = [
+            'result' => $ret
+          ];
+        } else {
+          $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$this->error_msg_key]
+            ],
+          ];
+        }
+      } catch(\Exception $e){
+        $result = [
+            'result' => false,
+            'error' => [
+                'messages' => [$e->getMessage()]
+            ],
+        ];
+        return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
+    }
     public function getDatabaseVersion(Request $request){
       try{
         if($this->checkAPIKey($request)){

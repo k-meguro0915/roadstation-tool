@@ -27,6 +27,17 @@ class RvParkService
     }
     return  $ret;
   }
+  public function getTargetRoadstation(){
+    $ret = [];
+    $rv = RvRoadstation::all()->get();
+    foreach($rv as $key => $item){
+      // $arr = $this->initApiArray(); //道の駅単位の初期化
+      $value = $item->getAttributes();
+      $arr['ZPX_ID'] = $value['ZPX_ID'];
+      $ret[] = $arr;
+    }
+    return  $ret;
+  }
   private function initApiArray(){
     $ret = [
       'SID' => '',
