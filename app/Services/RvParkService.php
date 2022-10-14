@@ -16,8 +16,11 @@ class RvParkService
       $value = $item->getAttributes();
       $arr['SID']                   = $value['SID'];
       $arr['legacy_id']             = $value['legacy_id'];
+      $arr['member_cd']             = $value['member_cd'];
+      $arr['spot_cd']             = $value['spot_cd'];
       $arr['name']                  = $value['name'];
       $arr['introductory_sentence'] = $value['introductory_sentence'];
+      $arr['prefecture']               = $value['prefecture'];
       $arr['address']               = $value['address'];
       $arr['tel']                   = $value['tel'];
       $arr['remarks']               = $value['remarks'];
@@ -43,8 +46,11 @@ class RvParkService
     $ret = [
       'SID' => '',
       'legacy_id' => '',
+      'member_cd' => '',
+      'spot_cd' => '',
       'name' => '',
       'introductory_sentence' => '',
+      'prefecture' => '',
       'address' => '',
       'tel' => '',
       'remarks' => '',
