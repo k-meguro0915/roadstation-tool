@@ -14,19 +14,19 @@ class RvParkService
     foreach($rv as $key => $item){
       $arr = $this->initApiArray(); //道の駅単位の初期化
       $value = $item->getAttributes();
-      $arr['SID']                   = $value['SID'];
-      $arr['legacy_id']             = $value['legacy_id'];
-      $arr['member_cd']             = $value['member_cd'];
-      $arr['spot_cd']             = $value['spot_cd'];
-      $arr['name']                  = $value['name'];
-      $arr['introductory_sentence'] = $value['introductory_sentence'];
-      $arr['prefecture']               = $value['prefecture'];
-      $arr['address']               = $value['address'];
-      $arr['tel']                   = $value['tel'];
-      $arr['remarks']               = $value['remarks'];
-      $arr['url']                   = $value['url'];
-      $arr['latitude']              = $value['latitude'];
-      $arr['longitude']             = $value['longitude'];
+      $arr['SID']                   = !empty($value['SID']) ? $value['SID'] : '';
+      $arr['legacy_id']             = !empty($value['legacy_id']) ? $value['legacy_id'] : '';
+      $arr['member_cd']             = !empty($value['member_cd']) ? $value['member_cd'] : '';
+      $arr['spot_cd']               = !empty($value['spot_cd']) ? $value['spot_cd'] : '';
+      $arr['name']                  = !empty($value['name']) ? $value['name'] : '';
+      $arr['introductory_sentence'] = !empty($value['introductory_sentence']) ? $value['introductory_sentence'] : '';
+      $arr['prefecture']            = !empty($value['prefecture']) ? $value['prefecture'] : '';
+      $arr['address']               = !empty($value['address']) ? $value['address'] : '';
+      $arr['tel']                   = !empty($value['tel']) ? $value['tel'] : '';
+      $arr['remarks']               = !empty($value['remarks']) ? $value['remarks'] : '';
+      $arr['url']                   = !empty($value['url']) ? $value['url'] : '';
+      $arr['latitude']              = !empty($value['latitude']) ? $value['latitude'] : '';
+      $arr['longitude']             = !empty($value['longitude']) ? $value['longitude'] : '';
       $ret[] = $arr;
     }
     return  $ret;
