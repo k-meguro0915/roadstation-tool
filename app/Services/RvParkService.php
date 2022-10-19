@@ -17,7 +17,7 @@ class RvParkService
       $arr['SID']                   = !empty($value['SID']) ? $value['SID'] : '';
       $arr['legacy_id']             = !empty($value['legacy_id']) ? $value['legacy_id'] : '';
       $arr['member_cd']             = !empty($value['member_cd']) ? strval($value['member_cd']) : '';
-      $arr['spot_cd']               = !empty($value['spot_cd']) ? $value['spot_cd'] : '';
+      $arr['spot_cd']               = !empty($value['spot_cd']) ? strval($value['spot_cd']) : '';
       $arr['name']                  = !empty($value['name']) ? $value['name'] : '';
       $arr['introductory_sentence'] = !empty($value['introductory_sentence']) ? $value['introductory_sentence'] : '';
       $arr['prefecture']            = !empty($value['prefecture']) ? $value['prefecture'] : '';
