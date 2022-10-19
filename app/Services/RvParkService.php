@@ -58,6 +58,7 @@ class RvParkService
       'url' => '',
       'latitude' => '',
       'longitude' => '',
+      'picture' => '',
     ];
     return $ret;
   }
