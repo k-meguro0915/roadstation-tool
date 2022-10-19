@@ -27,6 +27,7 @@ class RvParkService
       $arr['url']                   = !empty($value['url']) ? $value['url'] : '';
       $arr['latitude']              = !empty($value['latitude']) ? $value['latitude'] : '';
       $arr['longitude']             = !empty($value['longitude']) ? $value['longitude'] : '';
+      $arr['picture']             = !empty($value['picture']) ? $value['picture'] : '';
       $ret[] = $arr;
     }
     return  $ret;
