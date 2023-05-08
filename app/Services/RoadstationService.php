@@ -279,8 +279,8 @@ class RoadstationService
       if(!empty($business_hour[0]) && !empty($business_hour[0]['start_time']) && !empty($business_hour[0]['end_time'])){
         $business_hour = $business_hour[0];
         $arr["BusinessHours"]             = $business_hour['start_time'] . '～' . $business_hour['end_time'];
-        $arr["BusinessHoursInformation"]  = $business_hour['time_sightseeing_code'];
-        $arr["Holiday"]                   = $business_hour['regular_holiday'];
+        if(!empty($business_hour['time_sightseeing_code']))$arr["BusinessHoursInformation"]  = $business_hour['time_sightseeing_code'];
+        if(!empty($business_hour['regular_holiday']))$arr["Holiday"]                   = $business_hour['regular_holiday'];
       }
       $stamp = RoadstationBusinessStampInformation::where('CID',$value['CID'])->get();
       if(!empty($stamp[0])){
@@ -411,8 +411,8 @@ class RoadstationService
     if(!empty($business_hour[0])){
       $business_hour = $business_hour[0];
       $arr["BusinessHours"]             = $business_hour['start_time'] . '～' . $business_hour['end_time'];
-      $arr["BusinessHoursInformation"]  = $business_hour['time_sightseeing_code'];
-      $arr["Holiday"]                   = $business_hour['regular_holiday'];
+      if(!empty($business_hour['time_sightseeing_code']))$arr["BusinessHoursInformation"]  = $business_hour['time_sightseeing_code'];
+      if(!empty($business_hour['regular_holiday']))$arr["Holiday"]                   = $business_hour['regular_holiday'];
     }
     $stamp = RoadstationBusinessStampInformation::where('CID',$value['CID'])->get();
     if(!empty($stamp[0])){
