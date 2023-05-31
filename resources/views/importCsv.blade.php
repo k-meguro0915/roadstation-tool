@@ -78,7 +78,7 @@
             let arr_td;
             let dom;
             let cnt = 0;
-            for(let i = 0; i < 100; i++){
+            for(let i = 0; i < table_body.length; i++){
               arr_td = table_body[i].split(',');
               dom = '<tr>';
               _regist.push(arr_td);
