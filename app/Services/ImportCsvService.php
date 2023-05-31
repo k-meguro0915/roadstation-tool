@@ -46,6 +46,7 @@ class ImportCsvService
       $this->createSeasonalInformationFlag($csv_data);
       DB::commit();
     } catch (\Exception $e) {
+      Log::error($e);
       DB::rollback();
       dd($e);
       return false;
