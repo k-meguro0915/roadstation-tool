@@ -38,15 +38,14 @@ class CsvController extends Controller
     }
     try{
       if($type == 0){
-        if(count($fileHeader) != 100) Log::error("file header counts less than 100");return false;
+        if(count($fileHeader) != 100) Log::error("file header counts less than 100. header counts : ".count($fileHeader));return false;
         $ret = $service->bulkInsertRoadstation($users);
-        Log::error($ret);
       } else {
-        if(count($fileHeader) != 49) Log::error("file header counts less than 49");return false;
+        if(count($fileHeader) != 49) Log::error("file header counts less than 49. header counts : ".count($fileHeader));return false;
         $ret = $service->bulkInsertFacility($users);
-        Log::error($ret);
       }
     } catch (Exception $e) {
+      Log::error($e);
       throw new Exception("項目数エラー");
     }
     if($ret){
