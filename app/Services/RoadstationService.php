@@ -257,8 +257,8 @@ class RoadstationService
       $address = $address[0];
       $arr["Area"]              = $address['area'];
       if($prefecture_id == 999){
-        $arr["Latitude"]          = 0;
-        $arr["Longitude"]         = 0;
+        $arr["Latitude"]          = "0";
+        $arr["Longitude"]         = "0";
       } else {
         $arr["Latitude"]          = $address['latitude_y'];
         $arr["Longitude"]         = $address['latitude_x'];
@@ -365,8 +365,8 @@ class RoadstationService
       $address = $address[0];
       $arr["Area"]              = $address['area'];
       if($prefecture_id == 999){
-        $arr["Latitude"]          = 0;
-        $arr["Longitude"]         = 0;
+        $arr["Latitude"]          = "0";
+        $arr["Longitude"]         = "0";
       } else {
         $arr["Latitude"]          = $address['latitude_y'];
         $arr["Longitude"]         = $address['latitude_x'];
@@ -403,8 +403,8 @@ class RoadstationService
     $address = $address[0];
     $arr["Area"]                = $address['area'];
     if($prefecture_id == 999){
-      $arr["Latitude"]          = 0;
-      $arr["Longitude"]         = 0;
+      $arr["Latitude"]          = "0";
+      $arr["Longitude"]         = "0";
     } else {
       $arr["Latitude"]          = $address['latitude_y'];
       $arr["Longitude"]         = $address['latitude_x'];
