@@ -256,7 +256,7 @@ class RoadstationService
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
       $arr["Area"]              = $address['area'];
-      if($prefecture_id == 0){
+      if($prefecture_id == 999){
         $arr["Latitude"]          = 0;
         $arr["Longitude"]         = 0;
       } else {
@@ -364,7 +364,7 @@ class RoadstationService
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
       $address = $address[0];
       $arr["Area"]              = $address['area'];
-      if($prefecture_id == 0){
+      if($prefecture_id == 999){
         $arr["Latitude"]          = 0;
         $arr["Longitude"]         = 0;
       } else {
@@ -402,7 +402,7 @@ class RoadstationService
     $address = RoadstationAddress::where('CID',$value['CID'])->get();
     $address = $address[0];
     $arr["Area"]                = $address['area'];
-    if($prefecture_id == 0){
+    if($prefecture_id == 999){
       $arr["Latitude"]          = 0;
       $arr["Longitude"]         = 0;
     } else {
