@@ -36,12 +36,17 @@ class CsvController extends Controller
     } catch (Exception $e) {
       throw new Exception("項目数エラー");
     }
-    if($type == 0){
-      if(count($fileHeader) != 100) return false;
-      $ret = $service->bulkInsertRoadstation($users);
-    } else {
-      if(count($fileHeader) != 49) return false;
-      $ret = $service->bulkInsertFacility($users);
+    try{
+      if($type == 0){
+        if(count($fileHeader) != 100){ Log::error("file header counts less than 100. header counts : ".count($fileHeader));return false;}
+        $ret = $service->bulkInsertRoadstation($users);
+      } else {
+        if(count($fileHeader) != 49) {Log::error("file header counts less than 49. header counts : ".count($fileHeader));return false;}
+        $ret = $service->bulkInsertFacility($users);
+      }
+    } catch (Exception $e) {
+      Log::error($e);
+      throw new Exception("項目数エラー");
     }
     if($ret){
       $version = new DataVersionService();
