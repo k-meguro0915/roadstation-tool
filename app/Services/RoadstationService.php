@@ -250,6 +250,7 @@ class RoadstationService
       $arr["PhotoUrl"]            = $value['thumbnail'];
       $arr["RegistryYear"]        = $value['registry_year'];
       $prefecture_id              = intval(substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-'))); //to_integer
+      $prefecture_id              = $prefecture_id == 0 ? 999 : $prefecture_id;
       $arr["PrefectureCD"]        = $prefecture_id;
       $arr["PrefectureID"]        = $prefecture_id;
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
@@ -352,6 +353,7 @@ class RoadstationService
       $arr["ID"]                  = $value['ZPX_ID'];
       $arr["RoadStationName"]     = $value['name'];
       $prefecture_id              = intval(substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-'))); //to_integer
+      $prefecture_id              = $prefecture_id == 0 ? 999 : $prefecture_id;
       $arr["PrefectureCD"]        = $prefecture_id;
       $arr["PrefectureID"]        = $prefecture_id;
       $address = RoadstationAddress::where('CID',$value['CID'])->get();
@@ -384,6 +386,7 @@ class RoadstationService
     $arr["PhotoUrl"]            = $value['thumbnail'];
     $arr["RegistryYear"]        = $value['registry_year'];
     $prefecture_id              = intval(substr($value['ZPX_ID'],0,strpos($value['ZPX_ID'],'-'))); //to_integer
+    $prefecture_id              = $prefecture_id == 0 ? 999 : $prefecture_id;
     $arr["PrefectureCD"]        = $prefecture_id;
     $arr["PrefectureID"]        = $prefecture_id;
     $address = RoadstationAddress::where('CID',$value['CID'])->get();
