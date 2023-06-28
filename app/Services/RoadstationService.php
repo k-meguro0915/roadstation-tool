@@ -153,6 +153,10 @@ class RoadstationService
         $basic['CID'] = $cid;
         $this->createRelationTable(new RoadstationBusinessHour(),$basic);
       }
+      if(!empty($basic)){
+        $basic['CID'] = $cid;
+        $this->createRelationTable(new RoadstationBusinessHour(),$basic);
+      }
       if(!empty($stamp)){
         $tmp = [];
         foreach($stamp as $key => $item){
@@ -179,6 +183,10 @@ class RoadstationService
       if(!empty($contact)){
         $contact['CID'] = $cid;
         $this->createRelationTable(new RoadstationContact(), $contact);
+      }
+      if(!empty($parking)){
+        $parking['CID'] = $cid;
+        $this->createRelationTable(new RoadstationParking(), $parking);
       }
       if(!empty($local_road)){
         $tmp = [];
