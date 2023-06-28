@@ -153,6 +153,10 @@ class RoadstationService
         $basic['CID'] = $cid;
         $this->createRelationTable(new RoadstationBusinessHour(),$basic);
       }
+      if(!empty($basic)){
+        $basic['CID'] = $cid;
+        $this->createRelationTable(new RoadstationBusinessHour(),$basic);
+      }
       if(!empty($stamp)){
         $tmp = [];
         foreach($stamp as $key => $item){
@@ -179,6 +183,19 @@ class RoadstationService
       if(!empty($contact)){
         $contact['CID'] = $cid;
         $this->createRelationTable(new RoadstationContact(), $contact);
+      }
+      if(!empty($parking)){
+        $tmp = [];
+        foreach($parking as $key => $item){
+          $tmp[] = [
+            'CID'=>$cid,
+            'learge_parking_number'=>$item['learge_parking_number'],
+            'middle_parking_number'=>$item['middle_parking_number'],
+            'disabilities_parking_number'=>$item['disabilities_parking_number'],
+          ];
+        }
+        RoadstationParking::where('CID',$cid)->delete();
+        $this->createRelationTable(new RoadstationParking() , $tmp);
       }
       if(!empty($local_road)){
         $tmp = [];
