@@ -24,6 +24,7 @@ class RvPark extends Model
       'latitude',
       'longitude',
       'picture',
+      'target_year'
     ];
     protected $primaryKey = ['SID,legacy_id'];
 }

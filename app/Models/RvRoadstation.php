@@ -11,6 +11,7 @@ class RvRoadstation extends Model
     protected $table = 'rv_roadstations';
     protected $fillable = [
       'ZPX_ID',
+      'target_year'
     ];
     protected $primaryKey = ['ZPX_ID'];
 }

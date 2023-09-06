@@ -189,8 +189,9 @@ class APIController extends Controller
     public function getRvParks(Request $request){
       try{
         if($this->checkAPIKey($request)){
+          $target_year = $request->target_year;
           $service = new RvParkService;
-          $ret = $service->get();
+          $ret = $service->get($target_year);
           $result = [
             'result' => $ret
           ];
@@ -216,8 +217,9 @@ class APIController extends Controller
     public function getRvRoadstation(Request $request){
       try{
         if($this->checkAPIKey($request)){
+          $target_year = $request->target_year;
           $service = new RvParkService;
-          $ret = $service->getTargetRoadstation();
+          $ret = $service->getTargetRoadstation($target_year);
           $result = [
             'result' => $ret
           ];
