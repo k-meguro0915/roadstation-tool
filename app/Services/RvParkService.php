@@ -32,7 +32,7 @@ class RvParkService
     }
     return  $ret;
   }
-  public function getTargetRoadstation(){
+  public function getTargetRoadstation($target_year){
     $ret = [];
     $rv = RvRoadstation::where('target_year',$target_year)->orderBy('ZPX_ID','asc')->get();
     foreach($rv as $key => $item){
