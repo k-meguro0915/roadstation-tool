@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class RvParkService
 {
-  public function get(){
+  public function get($target_year){
     $ret = [];
-    $rv = RvPark::orderBy('SID','asc')->get();
+    $rv = RvPark::where('target_year',$target_year)->orderBy('SID','asc')->get();
     foreach($rv as $key => $item){
       $arr = $this->initApiArray(); //道の駅単位の初期化
       $value = $item->getAttributes();
@@ -32,9 +32,9 @@ class RvParkService
     }
     return  $ret;
   }
-  public function getTargetRoadstation(){
+  public function getTargetRoadstation($target_year){
     $ret = [];
-    $rv = RvRoadstation::orderBy('ZPX_ID','asc')->get();
+    $rv = RvRoadstation::where('target_year',$target_year)->orderBy('ZPX_ID','asc')->get();
     foreach($rv as $key => $item){
       // $arr = $this->initApiArray(); //道の駅単位の初期化
       $value = $item->getAttributes();
